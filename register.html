@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account — Stackly</title>
+  <meta name="description" content="Create your Stackly Travel Booking Platform account.">
+
+  <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #101010;
+      --dark: #171717;
+      --dark-2: #202020;
+      --white: #ffffff;
+      --muted: #777777;
+      --border: #e8e8e8;
+      --soft: #f7f7f7;
+      --accent: #ff5b35;
+      --accent-dark: #e94825;
+      --green: #20a36a;
+      --shadow: 0 25px 70px rgba(0,0,0,.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      background: #f2f2f0;
+      color: var(--black);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    /* =========================
+       MAIN LAYOUT
+    ========================= */
+
+    .register-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 48% 52%;
+      padding: 18px;
+      gap: 18px;
+    }
+
+    /* =========================
+       LEFT VISUAL
+    ========================= */
+
+    .visual-panel {
+      position: relative;
+      min-height: calc(100vh - 36px);
+      border-radius: 28px;
+      overflow: hidden;
+      background: #111;
+      color: #fff;
+      isolation: isolate;
+    }
+
+    .visual-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+      filter: saturate(.9);
+    }
+
+    .visual-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.15) 0%,
+          rgba(0,0,0,.08) 30%,
+          rgba(0,0,0,.78) 100%
+        );
+      z-index: -2;
+    }
+
+    .visual-glow {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -150px;
+      top: -150px;
+      background: rgba(255,255,255,.12);
+      border-radius: 50%;
+      filter: blur(40px);
+      z-index: -1;
+    }
+
+    .brand {
+      position: absolute;
+      top: 32px;
+      left: 34px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      z-index: 5;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      background: rgba(255,255,255,.96);
+      border-radius: 12px;
+      padding: 7px;
+    }
+
+    .brand-text {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .brand-text small {
+      display: block;
+      margin-top: 1px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: .7;
+    }
+
+    .visual-content {
+      position: absolute;
+      left: 38px;
+      right: 38px;
+      bottom: 40px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .4px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #7cffba;
+      box-shadow: 0 0 12px #7cffba;
+    }
+
+    .visual-content h2 {
+      max-width: 620px;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(38px, 4vw, 65px);
+      line-height: .98;
+      letter-spacing: -2.8px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .visual-content h2 span {
+      color: #ff8062;
+    }
+
+    .visual-content > p {
+      max-width: 540px;
+      color: rgba(255,255,255,.72);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      min-width: 125px;
+      padding: 15px 17px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(16px);
+      border-radius: 15px;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    .stat span {
+      color: rgba(255,255,255,.58);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* =========================
+       FORM PANEL
+    ========================= */
+
+    .form-panel {
+      min-height: calc(100vh - 36px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 45px 50px;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .register-box {
+      width: 100%;
+      max-width: 530px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 42px;
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #777;
+      font-size: 13px;
+      font-weight: 600;
+      transition: .25s ease;
+    }
+
+    .back-home svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+    }
+
+    .back-home:hover {
+      color: var(--black);
+      transform: translateX(-3px);
+    }
+
+    .login-link {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .login-link a {
+      color: var(--black);
+      font-weight: 700;
+      border-bottom: 1px solid #222;
+      padding-bottom: 2px;
+    }
+
+    .heading {
+      margin-bottom: 28px;
+    }
+
+    .heading h1 {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(34px, 4vw, 49px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+
+    .heading p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    .form-error {
+      display: none;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      border-radius: 11px;
+      background: #fff0ee;
+      border: 1px solid #ffd1ca;
+      color: #c73721;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    /* =========================
+       FIELDS
+    ========================= */
+
+    .form-field {
+      margin-bottom: 18px;
+    }
+
+    .form-field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #343434;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translateY(-50%);
+      color: #999;
+      pointer-events: none;
+    }
+
+    .input-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      height: 52px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      outline: none;
+      padding: 0 15px 0 45px;
+      background: #fafafa;
+      color: #151515;
+      font-size: 14px;
+      transition: .25s ease;
+    }
+
+    .input-wrap input::placeholder {
+      color: #aaa;
+    }
+
+    .input-wrap input:hover {
+      border-color: #d5d5d5;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--black);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(0,0,0,.045);
+    }
+
+    .input-wrap:focus-within .input-icon {
+      color: var(--black);
+    }
+
+    .field-error {
+      display: none;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #e04a31;
+    }
+
+    .form-field.invalid input {
+      border-color: #e04a31;
+      background: #fff8f6;
+    }
+
+    .form-field.invalid .field-error {
+      display: block;
+    }
+
+    .password-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* =========================
+       ROLE SELECT
+    ========================= */
+
+    .role-label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .role-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      gap: 4px;
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      background: #f6f6f6;
+    }
+
+    .role-option {
+      position: relative;
+      min-height: 57px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: #777;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: .25s ease;
+    }
+
+    .role-option svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+    }
+
+    .role-option.active {
+      color: #111;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .role-description {
+      margin-top: 8px;
+      color: #999;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       TERMS
+    ========================= */
+
+    .terms {
+      margin: 22px 0;
+    }
+
+    .checkline {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: #888;
+      font-size: 11px;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .checkline input {
+      width: 15px;
+      height: 15px;
+      margin-top: 1px;
+      accent-color: var(--black);
+      flex: 0 0 auto;
+    }
+
+    .checkline a {
+      color: #222;
+      font-weight: 700;
+    }
+
+    /* =========================
+       CREATE BUTTON
+    ========================= */
+
+    .create-btn {
+      position: relative;
+      width: 100%;
+      height: 55px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--black);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      overflow: hidden;
+      transition: .3s ease;
+    }
+
+    .create-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-101%);
+      transition: .35s ease;
+    }
+
+    .create-btn span,
+    .create-btn svg {
+      position: relative;
+      z-index: 2;
+    }
+
+    .create-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      transition: .3s ease;
+    }
+
+    .create-btn:hover::before {
+      transform: translateX(0);
+    }
+
+    .create-btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    .create-btn:active {
+      transform: scale(.99);
+    }
+
+    /* =========================
+       DIVIDER
+    ========================= */
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 26px 0 17px;
+      color: #aaa;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #ececec;
+    }
+
+    /* =========================
+       SOCIAL
+    ========================= */
+
+    .social-auth {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .social-btn {
+      height: 48px;
+      border: 1px solid #e7e7e7;
+      border-radius: 12px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #333;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .social-btn:hover {
+      border-color: #bbb;
+      background: #fafafa;
+      transform: translateY(-2px);
+    }
+
+    .social-icon {
+      width: 19px;
+      height: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .google-icon {
+      color: #4285f4;
+    }
+
+    .x-icon {
+      color: #111;
+    }
+
+    .secure-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      margin-top: 22px;
+      color: #aaa;
+      font-size: 10px;
+    }
+
+    .secure-note svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: #888;
+      stroke-width: 1.7;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 1050px) {
+      .register-page {
+        grid-template-columns: 43% 57%;
+      }
+
+      .form-panel {
+        padding: 40px 35px;
+      }
+
+      .visual-content {
+        left: 28px;
+        right: 28px;
+      }
+
+      .visual-content h2 {
+        font-size: 45px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      body {
+        background: #fff;
+      }
+
+      .register-page {
+        display: block;
+        padding: 0;
+      }
+
+      .visual-panel {
+        min-height: 360px;
+        border-radius: 0 0 28px 28px;
+      }
+
+      .form-panel {
+        min-height: auto;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 38px 22px 50px;
+      }
+
+      .visual-content {
+        bottom: 28px;
+      }
+
+      .visual-content h2 {
+        font-size: 38px;
+        letter-spacing: -1.8px;
+      }
+
+      .visual-content > p {
+        display: none;
+      }
+
+      .stats {
+        gap: 7px;
+      }
+
+      .stat {
+        min-width: 100px;
+        padding: 11px 12px;
+      }
+
+      .stat strong {
+        font-size: 17px;
+      }
+
+      .stat span {
+        font-size: 8px;
+      }
+
+      .brand {
+        top: 22px;
+        left: 22px;
+      }
+
+      .visual-panel {
+        border-radius: 0 0 25px 25px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .top-row {
+        margin-bottom: 32px;
+      }
+
+      .login-link {
+        display: none;
+      }
+
+      .heading h1 {
+        font-size: 37px;
+      }
+
+      .password-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .social-auth {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-panel {
+        min-height: 330px;
+      }
+
+      .visual-content h2 {
+        font-size: 34px;
+      }
+
+      .eyebrow {
+        font-size: 9px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="register-page">
+
+    <!-- =========================
+         VISUAL PANEL
+    ========================== -->
+
+    <section class="visual-panel">
+
+      <img
+        src="img/dest-iceland.webp"
+        alt="Northern lights over Iceland"
+        class="visual-image"
+      >
+
+      <div class="visual-overlay"></div>
+      <div class="visual-glow"></div>
+
+      <a href="index.html" class="brand">
+        <img src="svg/logo.svg" alt="Stackly logo">
+        <div class="brand-text">
+          Stackly
+          <small>Travel Booking Platform</small>
+        </div>
+      </a>
+
+      <div class="visual-content">
+
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          Start your journey today
+        </div>
+
+        <h2>
+          Travel more.<br>
+          <span>Plan smarter.</span>
+        </h2>
+
+        <p>
+          Create your Stackly account and discover stays, experiences
+          and unforgettable destinations — all in one place.
+        </p>
+
+        <div class="stats">
+
+          <div class="stat">
+            <strong>98K+</strong>
+            <span>Travellers</span>
+          </div>
+
+          <div class="stat">
+            <strong>15%</strong>
+            <span>Member savings</span>
+          </div>
+
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>Support</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FORM PANEL
+    ========================== -->
+
+    <section class="form-panel">
+
+      <div class="register-box">
+
+        <div class="top-row">
+
+          <a href="index.html" class="back-home">
+            <svg viewBox="0 0 24 24">
+              <path d="M19 12H5"></path>
+              <path d="M12 19l-7-7 7-7"></path>
+            </svg>
+            Back to home
+          </a>
+
+          <div class="login-link">
+            Already a member?
+            <a href="login.html">Log in</a>
+          </div>
+
+        </div>
+
+
+        <div class="heading">
+
+          <h1>Create your account.</h1>
+
+          <p>
+            Join Stackly for free and start planning your next adventure.
+          </p>
+
+        </div>
+
+
+        <div class="form-error" id="regError"></div>
+
+
+        <form id="registerForm" novalidate>
+
+          <!-- NAME -->
+
+          <div class="form-field" id="nameField">
+
+            <label for="rgName">
+              Full name
+            </label>
+
+            <div class="input-wrap">
+
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="8" r="4"></circle>
+                  <path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"></path>
+                </svg>
+              </span>
+
+              <input
+                id="rgName"
+                name="fullname"
+                type="text"
+                placeholder="Alex Morgan"
+                autocomplete="name"
+              >
+
+            </div>
+
+            <div class="field-error">
+              Please enter your full name.
+            </div>
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-field" id="emailField">
+
+            <label for="rgEmail">
+              Email address
+            </label>
+
+            <div class="input-wrap">
+
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <path d="m3 7 9 6 9-6"></path>
+                </svg>
+              </span>
+
+              <input
+                id="rgEmail"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+              >
+
+            </div>
+
+            <div class="field-error">
+              Please enter a valid email address.
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="password-grid">
+
+            <div class="form-field" id="passwordField">
+
+              <label for="rgPass">
+                Password
+              </label>
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                  </svg>
+                </span>
+
+                <input
+                  id="rgPass"
+                  name="password"
+                  type="password"
+                  placeholder="Min. 6 characters"
+                  autocomplete="new-password"
+                >
+
+              </div>
+
+              <div class="field-error">
+                Password must contain at least 6 characters.
+              </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-field" id="confirmField">
+
+              <label for="rgPass2">
+                Confirm password
+              </label>
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m5 12 4 4L19 6"></path>
+                  </svg>
+                </span>
+
+                <input
+                  id="rgPass2"
+                  name="confirm"
+                  type="password"
+                  placeholder="Repeat password"
+                  autocomplete="new-password"
+                >
+
+              </div>
+
+              <div class="field-error">
+                Passwords do not match.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ROLE -->
+
+          <div class="form-field">
+
+            <label class="role-label">
+              I want to join as
+            </label>
+
+            <div class="role-switch">
+
+              <button
+                type="button"
+                class="role-option active"
+                id="userRoleBtn"
+              >
+
+                <svg viewBox="0 0 24 24">
+                  <circle cx="9" cy="8" r="3"></circle>
+                  <path d="M3 20c0-3.2 2.7-5.5 6-5.5s6 2.3 6 5.5"></path>
+                  <path d="M16 11a3 3 0 0 0 0-6"></path>
+                  <path d="M18 15c1.8.7 3 2.3 3 5"></path>
+                </svg>
+
+                Traveller
+
+              </button>
+
+
+              <button
+                type="button"
+                class="role-option"
+                id="adminRoleBtn"
+              >
+
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                  <path d="M8 9h8M8 13h5M8 17h3"></path>
+                </svg>
+
+                Seller / Admin
+
+              </button>
+
+            </div>
+
+            <p class="role-description" id="roleDescription">
+              Create an account to discover and book stays, trips and experiences.
+            </p>
+
+            <input
+              type="radio"
+              name="role"
+              id="roleUser"
+              value="user"
+              checked
+              hidden
+            >
+
+            <input
+              type="radio"
+              name="role"
+              id="roleAdmin"
+              value="admin"
+              hidden
+            >
+
+          </div>
+
+
+          <!-- TERMS -->
+
+          <div class="terms">
+
+            <label class="checkline">
+
+              <input
+                type="checkbox"
+                id="termsCheck"
+                name="terms"
+              >
+
+              <span>
+                I agree to the
+                <a href="404.html">Terms of Service</a>
+                and
+                <a href="404.html">Privacy Policy</a>.
+              </span>
+
+            </label>
+
+          </div>
+
+
+          <!-- BUTTON -->
+
+          <button
+            class="create-btn"
+            type="submit"
+          >
+
+            <span>Create Account</span>
+
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14"></path>
+              <path d="m13 6 6 6-6 6"></path>
+            </svg>
+
+          </button>
+
+        </form>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+          Or continue with
+        </div>
+
+
+        <!-- SOCIAL -->
+
+        <div class="social-auth">
+
+          <button
+            type="button"
+            class="social-btn"
+          >
+            <span class="social-icon google-icon">G</span>
+            Google
+          </button>
+
+          <button
+            type="button"
+            class="social-btn"
+          >
+            <span class="social-icon x-icon">𝕏</span>
+            X / Twitter
+          </button>
+
+        </div>
+
+
+        <div class="secure-note">
+
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+          </svg>
+
+          Your information is securely protected
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+    /* =========================
+       ROLE SWITCH
+    ========================== */
+
+    const userRoleBtn = document.getElementById("userRoleBtn");
+    const adminRoleBtn = document.getElementById("adminRoleBtn");
+
+    const roleUser = document.getElementById("roleUser");
+    const roleAdmin = document.getElementById("roleAdmin");
+
+    const roleDescription =
+      document.getElementById("roleDescription");
+
+
+    userRoleBtn.addEventListener("click", function () {
+
+      userRoleBtn.classList.add("active");
+      adminRoleBtn.classList.remove("active");
+
+      roleUser.checked = true;
+      roleAdmin.checked = false;
+
+      roleDescription.textContent =
+        "Create an account to discover and book stays, trips and experiences.";
+
+    });
+
+
+    adminRoleBtn.addEventListener("click", function () {
+
+      adminRoleBtn.classList.add("active");
+      userRoleBtn.classList.remove("active");
+
+      roleAdmin.checked = true;
+      roleUser.checked = false;
+
+      roleDescription.textContent =
+        "Create a seller account to manage destinations, bookings and travel experiences.";
+
+    });
+
+
+    /* =========================
+       INLINE VALIDATION
+    ========================== */
+
+    const form = document.getElementById("registerForm");
+
+    const nameInput = document.getElementById("rgName");
+    const emailInput = document.getElementById("rgEmail");
+    const passwordInput = document.getElementById("rgPass");
+    const confirmInput = document.getElementById("rgPass2");
+    const termsCheck = document.getElementById("termsCheck");
+
+    const nameField = document.getElementById("nameField");
+    const emailField = document.getElementById("emailField");
+    const passwordField = document.getElementById("passwordField");
+    const confirmField = document.getElementById("confirmField");
+    const regError = document.getElementById("regError");
+
+
+    function clearErrors() {
+
+      document
+        .querySelectorAll(".form-field")
+        .forEach(field => field.classList.remove("invalid"));
+
+      regError.classList.remove("show");
+      regError.textContent = "";
+
+    }
+
+
+    function showError(field, message) {
+
+      field.classList.add("invalid");
+
+      if (!regError.classList.contains("show")) {
+        regError.textContent = message;
+        regError.classList.add("show");
+      }
+
+    }
+
+
+    form.addEventListener("submit", function (event) {
+
+      event.preventDefault();
+
+      clearErrors();
+
+      let valid = true;
+
+
+      /* NAME */
+
+      if (nameInput.value.trim().length < 2) {
+
+        showError(
+          nameField,
+          "Please enter your full name."
+        );
+
+        valid = false;
+      }
+
+
+      /* EMAIL */
+
+      const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailPattern.test(emailInput.value.trim())) {
+
+        showError(
+          emailField,
+          "Please enter a valid email address."
+        );
+
+        valid = false;
+      }
+
+
+      /* PASSWORD */
+
+      if (passwordInput.value.length < 6) {
+
+        showError(
+          passwordField,
+          "Password must contain at least 6 characters."
+        );
+
+        valid = false;
+      }
+
+
+      /* CONFIRM */
+
+      if (
+        confirmInput.value === "" ||
+        confirmInput.value !== passwordInput.value
+      ) {
+
+        showError(
+          confirmField,
+          "Passwords do not match."
+        );
+
+        valid = false;
+      }
+
+
+      /* TERMS */
+
+      if (!termsCheck.checked) {
+
+        regError.textContent =
+          "Please agree to the Terms of Service and Privacy Policy.";
+
+        regError.classList.add("show");
+
+        valid = false;
+      }
+
+
+      if (!valid) {
+
+        const firstInvalid =
+          document.querySelector(".form-field.invalid");
+
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
+
+        return;
+      }
+
+
+      /* =========================
+         SAVE ACCOUNT DETAILS
+      ========================== */
+
+      const name =
+        nameInput.value.trim();
+
+      const email =
+        emailInput.value.trim();
+
+      const role =
+        document.querySelector(
+          'input[name="role"]:checked'
+        ).value;
+
+
+      localStorage.setItem(
+        "loggedInEmail",
+        email
+      );
+
+      localStorage.setItem(
+        "loggedInRole",
+        role
+      );
+
+      localStorage.setItem(
+        "stacklyUser",
+        JSON.stringify({
+          name: name,
+          email: email,
+          role: role
+        })
+      );
+
+
+      /* =========================
+         REDIRECT
+      ========================== */
+
+      if (role === "admin") {
+
+        window.location.href =
+          "admin-dashboard.html";
+
+      } else {
+
+        window.location.href =
+          "client-dashboard.html";
+
+      }
+
+    });
+
+
+    /* Remove error while typing */
+
+    [
+      nameInput,
+      emailInput,
+      passwordInput,
+      confirmInput
+    ].forEach(input => {
+
+      input.addEventListener("input", function () {
+
+        this
+          .closest(".form-field")
+          .classList.remove("invalid");
+
+        if (
+          document.querySelectorAll(
+            ".form-field.invalid"
+          ).length === 0
+        ) {
+          regError.classList.remove("show");
+        }
+
+      });
+
+    });
+  </script>
+
+</body>
+</html>

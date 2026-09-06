@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly — Client Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --black:#111111;
+    --orange:#ff5a36;
+    --orange-light:#fff3ef;
+    --bg:#f6f6f4;
+    --white:#fff;
+    --text:#171717;
+    --muted:#858585;
+    --border:#e8e8e5;
+    --green:#24935b;
+    --red:#dc4b42;
+    --blue:#4777d9;
+    --shadow:0 10px 35px rgba(0,0,0,.05);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    background:#111;
+    color:#fff;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+    padding:25px 16px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:5px 12px 30px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:#fff;
+    color:#111;
+    display:grid;
+    place-items:center;
+    font-family:"Bricolage Grotesque";
+    font-size:20px;
+    font-weight:800;
+}
+
+.logo strong{
+    font-family:"Bricolage Grotesque";
+    font-size:21px;
+}
+
+.logo small{
+    display:block;
+    color:#777;
+    font-size:8px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-top:2px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.nav button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#999;
+    padding:13px 14px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    font-size:12px;
+    transition:.25s;
+}
+
+.nav button:hover{
+    color:#fff;
+    background:#1d1d1d;
+}
+
+.nav button.active{
+    background:var(--orange);
+    color:#fff;
+}
+
+.nav-icon{
+    width:20px;
+    text-align:center;
+    font-size:15px;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+}
+
+.logout{
+    color:#ff9180!important;
+}
+
+.logout:hover{
+    background:#291b19!important;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    height:75px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+    position:sticky;
+    top:0;
+    z-index:500;
+}
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:#111;
+    color:#fff;
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    font-size:20px;
+}
+
+.search{
+    width:280px;
+    height:40px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    padding:0 13px;
+    gap:8px;
+}
+
+.search input{
+    border:0;
+    outline:0;
+    width:100%;
+    font-size:11px;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.notification{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:#fff;
+    position:relative;
+}
+
+.notification span{
+    position:absolute;
+    width:7px;
+    height:7px;
+    background:var(--orange);
+    border-radius:50%;
+    top:7px;
+    right:8px;
+}
+
+.profile-mini{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:var(--orange);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-size:12px;
+    font-weight:700;
+}
+
+.profile-mini strong{
+    font-size:11px;
+    display:block;
+}
+
+.profile-mini span{
+    font-size:9px;
+    color:#999;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:32px 35px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+    animation:fade .3s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.page-title{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.page-title h1{
+    font-family:"Bricolage Grotesque";
+    font-size:30px;
+    letter-spacing:-1px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* ================= WELCOME ================= */
+
+.welcome-card{
+    background:#111;
+    color:#fff;
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+}
+
+.welcome-card:after{
+    content:"";
+    position:absolute;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    background:rgba(255,90,54,.25);
+    right:-80px;
+    top:-100px;
+}
+
+.welcome-card h1{
+    font-family:"Bricolage Grotesque";
+    font-size:28px;
+}
+
+.welcome-card p{
+    color:#aaa;
+    margin-top:7px;
+    font-size:11px;
+}
+
+.email-highlight{
+    color:#ff947d;
+}
+
+/* ================= STAT CARDS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+}
+
+.stat-icon{
+    width:36px;
+    height:36px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--orange-light);
+    color:var(--orange);
+}
+
+.stat-card small{
+    display:block;
+    margin-top:15px;
+    color:#999;
+    font-size:9px;
+}
+
+.stat-card strong{
+    display:block;
+    margin-top:4px;
+    font-family:"Bricolage Grotesque";
+    font-size:26px;
+}
+
+.stat-change{
+    color:var(--green);
+    font-size:9px;
+}
+
+/* ================= GRID ================= */
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:20px;
+    margin-bottom:22px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.card-header h3{
+    font-family:"Bricolage Grotesque";
+    font-size:16px;
+}
+
+.card-header a{
+    color:var(--orange);
+    font-size:10px;
+}
+
+/* ================= CHART ================= */
+
+.chart{
+    height:220px;
+    display:flex;
+    align-items:flex-end;
+    gap:15px;
+    padding:10px 5px 0;
+}
+
+.bar{
+    flex:1;
+    border-radius:8px 8px 3px 3px;
+    background:#ff7c60;
+    min-height:20px;
+    transition:.3s;
+    position:relative;
+}
+
+.bar:hover{
+    background:var(--orange);
+}
+
+.bar span{
+    position:absolute;
+    bottom:-20px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:8px;
+    color:#999;
+}
+
+/* ================= TRIP ================= */
+
+.trip-card{
+    position:relative;
+    overflow:hidden;
+    min-height:260px;
+    border-radius:16px;
+    background:
+        linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.8)),
+        url("img/blog-1.webp") center/cover;
+    color:#fff;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+}
+
+.trip-card .trip-tag{
+    position:absolute;
+    top:18px;
+    left:18px;
+    background:#fff;
+    color:#111;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.trip-card h2{
+    font-family:"Bricolage Grotesque";
+    font-size:24px;
+}
+
+.trip-card p{
+    font-size:10px;
+    color:#ddd;
+    margin-top:5px;
+}
+
+/* ================= TABLE ================= */
+
+.table-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th{
+    background:#fafafa;
+    color:#999;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    text-align:left;
+    padding:14px 18px;
+}
+
+td{
+    padding:16px 18px;
+    border-top:1px solid #f1f1f1;
+    font-size:10px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:8px;
+    font-weight:700;
+}
+
+.confirmed{
+    background:#eaf8f0;
+    color:var(--green);
+}
+
+.pending{
+    background:#fff6df;
+    color:#b17a00;
+}
+
+.cancelled{
+    background:#ffeded;
+    color:var(--red);
+}
+
+.action{
+    border:0;
+    background:var(--orange-light);
+    color:var(--orange);
+    border-radius:7px;
+    padding:7px 10px;
+    font-size:8px;
+}
+
+/* ================= PROFILE ================= */
+
+.profile-layout{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:20px;
+}
+
+.profile-card{
+    background:#111;
+    color:#fff;
+    border-radius:16px;
+    padding:25px;
+    text-align:center;
+}
+
+.big-avatar{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    background:var(--orange);
+    display:grid;
+    place-items:center;
+    margin:0 auto 15px;
+    font-family:"Bricolage Grotesque";
+    font-size:25px;
+}
+
+.profile-card h3{
+    font-family:"Bricolage Grotesque";
+}
+
+.profile-card p{
+    color:#888;
+    font-size:9px;
+    margin-top:5px;
+}
+
+.profile-info{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.info-box{
+    padding:15px;
+    background:#fafafa;
+    border-radius:10px;
+}
+
+.info-box small{
+    color:#999;
+    font-size:8px;
+}
+
+.info-box strong{
+    display:block;
+    margin-top:5px;
+    font-size:11px;
+}
+
+/* ================= TRIPS ================= */
+
+.trip-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.trip-item{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.trip-number{
+    color:var(--orange);
+    font-size:9px;
+    font-weight:700;
+}
+
+.trip-item h3{
+    font-family:"Bricolage Grotesque";
+    margin-top:7px;
+    font-size:20px;
+}
+
+.trip-meta{
+    display:flex;
+    gap:15px;
+    margin-top:15px;
+    color:#888;
+    font-size:9px;
+}
+
+/* ================= PAYMENT ================= */
+
+.payment-summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+/* ================= NOTIFICATIONS ================= */
+
+.notification-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.notification-item{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:17px;
+    display:flex;
+    gap:13px;
+}
+
+.notification-icon{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    background:var(--orange-light);
+    color:var(--orange);
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
+}
+
+.notification-item h4{
+    font-size:11px;
+}
+
+.notification-item p{
+    color:#888;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.notification-item time{
+    display:block;
+    margin-top:7px;
+    color:#aaa;
+    font-size:8px;
+}
+
+/* ================= SETTINGS ================= */
+
+.settings{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.setting-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:22px;
+}
+
+.setting-card h3{
+    font-family:"Bricolage Grotesque";
+    font-size:15px;
+    margin-bottom:18px;
+}
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+    border-top:1px solid #eee;
+}
+
+.setting-row span{
+    font-size:10px;
+}
+
+.setting-row small{
+    display:block;
+    color:#999;
+    margin-top:3px;
+    font-size:8px;
+}
+
+.toggle{
+    width:40px;
+    height:22px;
+    border:0;
+    border-radius:20px;
+    background:#ddd;
+    position:relative;
+}
+
+.toggle:after{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#fff;
+    top:3px;
+    left:3px;
+    transition:.2s;
+}
+
+.toggle.on{
+    background:var(--orange);
+}
+
+.toggle.on:after{
+    left:21px;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    padding:50px 20px;
+    text-align:center;
+    background:#fff;
+    border:1px dashed #ddd;
+    border-radius:16px;
+}
+
+.empty-icon{
+    font-size:35px;
+    margin-bottom:12px;
+}
+
+.empty h3{
+    font-family:"Bricolage Grotesque";
+}
+
+.empty p{
+    color:#999;
+    font-size:10px;
+    margin-top:5px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1000px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .search{
+        display:none;
+    }
+
+    .topbar{
+        padding:0 18px;
+    }
+
+    .content{
+        padding:22px 18px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .profile-layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .profile-mini div{
+        display:none;
+    }
+
+    .page-title{
+        display:block;
+    }
+
+    .page-title h1{
+        font-size:25px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:15px;
+    }
+
+    .stat-card strong{
+        font-size:22px;
+    }
+
+    .trip-list{
+        grid-template-columns:1fr;
+    }
+
+    .payment-summary{
+        grid-template-columns:1fr;
+    }
+
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .welcome-card{
+        padding:23px;
+    }
+
+    .welcome-card h1{
+        font-size:23px;
+    }
+
+}
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.logout-btn {
+    width: 100%;
+    height: 48px;
+    border: 1px solid rgba(255, 90, 90, 0.18);
+    border-radius: 12px;
+    background: rgba(255, 70, 70, 0.06);
+    color: #ff6b6b;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.logout-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 80, 80, 0.12);
+    font-size: 18px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+    background: #ff4d4d;
+    border-color: #ff4d4d;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 77, 77, 0.20);
+}
+
+.logout-btn:hover .logout-icon {
+    background: rgba(255,255,255,0.18);
+    transform: translateX(3px);
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+    <a class="logo" href="#" onclick="showPage('dashboard');return false;">
+        <span class="logo-icon">S</span>
+        <span>
+            <strong>Stackly</strong>
+            <small>Travel Platform</small>
+        </span>
+    </a>
+
+    <nav class="nav">
+
+        <button class="active" data-page="dashboard">
+            <span class="nav-icon">⌂</span>
+            Dashboard
+        </button>
+
+        <button data-page="profile">
+            <span class="nav-icon">♙</span>
+            My Profile
+        </button>
+
+        <button data-page="bookings">
+            <span class="nav-icon">▤</span>
+            My Bookings
+        </button>
+
+        <button data-page="trips">
+            <span class="nav-icon">✈</span>
+            Trips
+        </button>
+
+        <button data-page="wishlist">
+            <span class="nav-icon">♡</span>
+            Wishlist
+        </button>
+
+        <button data-page="payments">
+            <span class="nav-icon">₹</span>
+            Payments
+        </button>
+
+        <button data-page="notifications">
+            <span class="nav-icon">♢</span>
+            Notifications
+        </button>
+
+        <button data-page="settings">
+            <span class="nav-icon">⚙</span>
+            Settings
+        </button>
+
+    </nav>
+
+<div class="sidebar-bottom">
+    <button class="logout-btn" onclick="logout()">
+        <span class="logout-icon">↪</span>
+        <span>Logout</span>
+    </button>
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+    <header class="topbar">
+
+        <button class="mobile-menu" id="menuBtn">
+            ☰
+        </button>
+
+        <div class="search">
+            🔎
+            <input type="text" placeholder="Search your trips...">
+        </div>
+
+        <div class="top-right">
+
+            <button class="notification" onclick="showPage('notifications')">
+                ♢
+                <span></span>
+            </button>
+
+            <div class="profile-mini">
+
+                <div class="avatar" id="avatarTop">
+                    U
+                </div>
+
+                <div>
+                    <strong id="topEmail">
+                        User
+                    </strong>
+                    <span>Traveller</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="content">
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section class="page active" id="dashboard">
+
+            <div class="welcome-card">
+
+                <h1>
+                    Welcome back! 👋
+                </h1>
+
+                <p>
+                    Logged in as
+                    <span class="email-highlight" id="welcomeEmail">
+                        traveller@example.com
+                    </span>
+                </p>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">▤</span>
+                        <span class="stat-change">+12%</span>
+                    </div>
+                    <small>Total Bookings</small>
+                    <strong>12</strong>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">✈</span>
+                        <span class="stat-change">+2</span>
+                    </div>
+                    <small>Upcoming Trips</small>
+                    <strong>2</strong>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">✓</span>
+                        <span class="stat-change">+3</span>
+                    </div>
+                    <small>Completed Trips</small>
+                    <strong>8</strong>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">♡</span>
+                        <span class="stat-change">+1</span>
+                    </div>
+                    <small>Wishlist</small>
+                    <strong>5</strong>
+                </div>
+
+            </div>
+
+
+            <div class="grid-2">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>Travel activity</h3>
+                        <span>2026</span>
+                    </div>
+
+                    <div class="chart">
+
+                        <div class="bar" style="height:45%"><span>Jan</span></div>
+                        <div class="bar" style="height:65%"><span>Feb</span></div>
+                        <div class="bar" style="height:50%"><span>Mar</span></div>
+                        <div class="bar" style="height:80%"><span>Apr</span></div>
+                        <div class="bar" style="height:62%"><span>May</span></div>
+                        <div class="bar" style="height:92%"><span>Jun</span></div>
+                        <div class="bar" style="height:72%"><span>Jul</span></div>
+                        <div class="bar" style="height:85%"><span>Aug</span></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trip-card">
+
+                    <span class="trip-tag">
+                        UPCOMING TRIP
+                    </span>
+
+                    <h2>
+                        Bali, Indonesia
+                    </h2>
+
+                    <p>
+                        18 Oct — 24 Oct 2026 · 6 nights
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-card">
+
+                <div class="card-header" style="padding:20px 20px 0;">
+                    <h3>Recent bookings</h3>
+                    <a href="#" onclick="showPage('bookings');return false;">
+                        View all
+                    </a>
+                </div>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Booking</th>
+                                <th>Destination</th>
+                                <th>Date</th>
+                                <th>Guests</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>#STK-10284</td>
+                                <td>Bali</td>
+                                <td>18 Oct 2026</td>
+                                <td>2</td>
+                                <td>₹84,500</td>
+                                <td><span class="status confirmed">Confirmed</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>#STK-10261</td>
+                                <td>Dubai</td>
+                                <td>12 Aug 2026</td>
+                                <td>3</td>
+                                <td>₹1,12,800</td>
+                                <td><span class="status confirmed">Confirmed</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>#STK-10198</td>
+                                <td>Singapore</td>
+                                <td>20 Jun 2026</td>
+                                <td>2</td>
+                                <td>₹67,400</td>
+                                <td><span class="status pending">Pending</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PROFILE
+        ================================================== -->
+
+        <section class="page" id="profile">
+
+            <div class="page-title">
+                <div>
+                    <h1>My Profile</h1>
+                    <p>Manage your personal information.</p>
+                </div>
+            </div>
+
+            <div class="profile-layout">
+
+                <div class="profile-card">
+
+                    <div class="big-avatar" id="profileAvatar">
+                        U
+                    </div>
+
+                    <h3>Stackly Traveller</h3>
+
+                    <p id="profileEmail">
+                        traveller@example.com
+                    </p>
+
+                    <br>
+
+                    <span class="status confirmed">
+                        ● Active Account
+                    </span>
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="info-grid">
+
+                        <div class="info-box">
+                            <small>FULL NAME</small>
+                            <strong>Stackly Traveller</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <small>EMAIL ADDRESS</small>
+                            <strong id="profileEmail2">
+                                traveller@example.com
+                            </strong>
+                        </div>
+
+                        <div class="info-box">
+                            <small>PHONE</small>
+                            <strong>+91 98765 43210</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <small>LOCATION</small>
+                            <strong>Chennai, India</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <small>ACCOUNT STATUS</small>
+                            <strong>Verified</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <small>MEMBER SINCE</small>
+                            <strong>January 2025</strong>
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <button class="action"
+                        onclick="alert('Profile editing is available in the account settings.')">
+                        Edit Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BOOKINGS
+        ================================================== -->
+
+        <section class="page" id="bookings">
+
+            <div class="page-title">
+                <div>
+                    <h1>My Bookings</h1>
+                    <p>View and manage all your travel reservations.</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Destination</th>
+                                <th>Date</th>
+                                <th>Guests</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>#STK-10284</td>
+                                <td>Bali, Indonesia</td>
+                                <td>18 Oct 2026</td>
+                                <td>2</td>
+                                <td>₹84,500</td>
+                                <td><span class="status confirmed">Confirmed</span></td>
+                                <td><button class="action">View</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>#STK-10261</td>
+                                <td>Dubai, UAE</td>
+                                <td>12 Aug 2026</td>
+                                <td>3</td>
+                                <td>₹1,12,800</td>
+                                <td><span class="status confirmed">Confirmed</span></td>
+                                <td><button class="action">View</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>#STK-10198</td>
+                                <td>Singapore</td>
+                                <td>20 Jun 2026</td>
+                                <td>2</td>
+                                <td>₹67,400</td>
+                                <td><span class="status pending">Pending</span></td>
+                                <td><button class="action">View</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>#STK-10087</td>
+                                <td>Paris, France</td>
+                                <td>15 Mar 2026</td>
+                                <td>2</td>
+                                <td>₹1,45,000</td>
+                                <td><span class="status confirmed">Completed</span></td>
+                                <td><button class="action">View</button></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TRIPS
+        ================================================== -->
+
+        <section class="page" id="trips">
+
+            <div class="page-title">
+                <div>
+                    <h1>My Trips</h1>
+                    <p>Your travel timeline and upcoming adventures.</p>
+                </div>
+            </div>
+
+            <div class="trip-list">
+
+                <div class="trip-item">
+
+                    <span class="trip-number">
+                        UPCOMING · 01
+                    </span>
+
+                    <h3>Bali Escape</h3>
+
+                    <p style="color:#888;font-size:10px;margin-top:5px;">
+                        Indonesia
+                    </p>
+
+                    <div class="trip-meta">
+                        <span>📅 18 Oct 2026</span>
+                        <span>◷ 6 Nights</span>
+                    </div>
+
+                    <br>
+
+                    <span class="status confirmed">
+                        Confirmed
+                    </span>
+
+                </div>
+
+
+                <div class="trip-item">
+
+                    <span class="trip-number">
+                        UPCOMING · 02
+                    </span>
+
+                    <h3>Swiss Adventure</h3>
+
+                    <p style="color:#888;font-size:10px;margin-top:5px;">
+                        Switzerland
+                    </p>
+
+                    <div class="trip-meta">
+                        <span>📅 05 Dec 2026</span>
+                        <span>◷ 8 Nights</span>
+                    </div>
+
+                    <br>
+
+                    <span class="status pending">
+                        Payment Pending
+                    </span>
+
+                </div>
+
+
+                <div class="trip-item">
+
+                    <span class="trip-number">
+                        COMPLETED · 03
+                    </span>
+
+                    <h3>Paris Getaway</h3>
+
+                    <p style="color:#888;font-size:10px;margin-top:5px;">
+                        France
+                    </p>
+
+                    <div class="trip-meta">
+                        <span>📅 15 Mar 2026</span>
+                        <span>◷ 5 Nights</span>
+                    </div>
+
+                    <br>
+
+                    <span class="status confirmed">
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <div class="trip-item">
+
+                    <span class="trip-number">
+                        COMPLETED · 04
+                    </span>
+
+                    <h3>Tokyo Explorer</h3>
+
+                    <p style="color:#888;font-size:10px;margin-top:5px;">
+                        Japan
+                    </p>
+
+                    <div class="trip-meta">
+                        <span>📅 12 Jan 2026</span>
+                        <span>◷ 7 Nights</span>
+                    </div>
+
+                    <br>
+
+                    <span class="status confirmed">
+                        Completed
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             WISHLIST
+        ================================================== -->
+
+        <section class="page" id="wishlist">
+
+            <div class="page-title">
+                <div>
+                    <h1>Wishlist</h1>
+                    <p>Destinations you've saved for later.</p>
+                </div>
+            </div>
+
+            <div class="trip-list">
+
+                <div class="trip-card">
+                    <span class="trip-tag">SAVED</span>
+                    <h2>Maldives</h2>
+                    <p>From ₹54,000 · 5 nights</p>
+                </div>
+
+                <div class="trip-card">
+                    <span class="trip-tag">SAVED</span>
+                    <h2>Switzerland</h2>
+                    <p>From ₹1,28,000 · 8 nights</p>
+                </div>
+
+                <div class="trip-card">
+                    <span class="trip-tag">SAVED</span>
+                    <h2>New York</h2>
+                    <p>From ₹1,10,000 · 7 nights</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PAYMENTS
+        ================================================== -->
+
+        <section class="page" id="payments">
+
+            <div class="page-title">
+                <div>
+                    <h1>Payments</h1>
+                    <p>Track your travel payments and transactions.</p>
+                </div>
+            </div>
+
+            <div class="payment-summary">
+
+                <div class="stat-card">
+                    <small>TOTAL SPENT</small>
+                    <strong>₹4.82L</strong>
+                </div>
+
+                <div class="stat-card">
+                    <small>SUCCESSFUL PAYMENTS</small>
+                    <strong>10</strong>
+                </div>
+
+                <div class="stat-card">
+                    <small>PENDING</small>
+                    <strong>₹67,400</strong>
+                </div>
+
+            </div>
+
+            <div class="table-card">
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Transaction</th>
+                                <th>Booking ID</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>#TXN-92821</td>
+                                <td>#STK-10284</td>
+                                <td>02 Sep 2026</td>
+                                <td>₹84,500</td>
+                                <td>UPI</td>
+                                <td><span class="status confirmed">Successful</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>#TXN-91742</td>
+                                <td>#STK-10261</td>
+                                <td>28 Jul 2026</td>
+                                <td>₹1,12,800</td>
+                                <td>Card</td>
+                                <td><span class="status confirmed">Successful</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>#TXN-90128</td>
+                                <td>#STK-10198</td>
+                                <td>15 Jun 2026</td>
+                                <td>₹67,400</td>
+                                <td>UPI</td>
+                                <td><span class="status pending">Pending</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NOTIFICATIONS
+        ================================================== -->
+
+        <section class="page" id="notifications">
+
+            <div class="page-title">
+                <div>
+                    <h1>Notifications</h1>
+                    <p>Important updates about your Stackly account.</p>
+                </div>
+            </div>
+
+            <div class="notification-list">
+
+                <div class="notification-item">
+
+                    <div class="notification-icon">✓</div>
+
+                    <div>
+                        <h4>Booking confirmed</h4>
+                        <p>
+                            Your Bali trip booking #STK-10284 has been confirmed.
+                        </p>
+                        <time>2 hours ago</time>
+                    </div>
+
+                </div>
+
+
+                <div class="notification-item">
+
+                    <div class="notification-icon">₹</div>
+
+                    <div>
+                        <h4>Payment successful</h4>
+                        <p>
+                            Your payment of ₹84,500 was processed successfully.
+                        </p>
+                        <time>Yesterday</time>
+                    </div>
+
+                </div>
+
+
+                <div class="notification-item">
+
+                    <div class="notification-icon">✈</div>
+
+                    <div>
+                        <h4>Trip reminder</h4>
+                        <p>
+                            Your Bali adventure starts in 42 days.
+                        </p>
+                        <time>2 days ago</time>
+                    </div>
+
+                </div>
+
+
+                <div class="notification-item">
+
+                    <div class="notification-icon">%</div>
+
+                    <div>
+                        <h4>New travel offer</h4>
+                        <p>
+                            Save up to 20% on selected international destinations.
+                        </p>
+                        <time>4 days ago</time>
+                    </div>
+
+                </div>
+
+
+                <div class="notification-item">
+
+                    <div class="notification-icon">♙</div>
+
+                    <div>
+                        <h4>Profile updated</h4>
+                        <p>
+                            Your Stackly profile information was successfully updated.
+                        </p>
+                        <time>1 week ago</time>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SETTINGS
+        ================================================== -->
+
+        <section class="page" id="settings">
+
+            <div class="page-title">
+                <div>
+                    <h1>Settings</h1>
+                    <p>Control your Stackly account preferences.</p>
+                </div>
+            </div>
+
+            <div class="settings">
+
+                <div class="setting-card">
+
+                    <h3>Account Settings</h3>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Profile visibility</span>
+                            <small>Allow other users to see your profile.</small>
+                        </div>
+                        <button class="toggle on"></button>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Travel history</span>
+                            <small>Save your previous trip history.</small>
+                        </div>
+                        <button class="toggle on"></button>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <h3>Email Preferences</h3>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Booking emails</span>
+                            <small>Receive booking confirmations.</small>
+                        </div>
+                        <button class="toggle on"></button>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Travel offers</span>
+                            <small>Receive personalized offers.</small>
+                        </div>
+                        <button class="toggle"></button>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <h3>Notifications</h3>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Trip reminders</span>
+                            <small>Get reminders before your trips.</small>
+                        </div>
+                        <button class="toggle on"></button>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Payment alerts</span>
+                            <small>Receive payment updates.</small>
+                        </div>
+                        <button class="toggle on"></button>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-card">
+
+                    <h3>Privacy & Security</h3>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Two-factor authentication</span>
+                            <small>Add additional account security.</small>
+                        </div>
+                        <button class="toggle"></button>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <span>Login alerts</span>
+                            <small>Alert me about new logins.</small>
+                        </div>
+                        <button class="toggle on"></button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   LOGIN PROTECTION
+========================================================= */
+
+const loggedInEmail =
+    localStorage.getItem("loggedInEmail");
+
+
+/*
+   If your login page currently stores the email
+   inside "stacklyUser", this fallback also supports it.
+*/
+
+let userEmail = loggedInEmail;
+
+if (!userEmail) {
+
+    const savedUser =
+        localStorage.getItem("stacklyUser");
+
+    if (savedUser) {
+
+        try {
+
+            const data =
+                JSON.parse(savedUser);
+
+            userEmail = data.email;
+
+        } catch(error) {}
+
+    }
+
+}
+
+
+/*
+   For dashboard testing, if there is no login email,
+   create a temporary email.
+
+   Remove the next two lines if you want strict
+   login protection.
+*/
+
+if (!userEmail) {
+    userEmail = "traveller@example.com";
+}
+
+
+/* =========================================================
+   DISPLAY EMAIL
+========================================================= */
+
+document.getElementById("welcomeEmail").textContent =
+    userEmail;
+
+document.getElementById("topEmail").textContent =
+    userEmail;
+
+document.getElementById("profileEmail").textContent =
+    userEmail;
+
+document.getElementById("profileEmail2").textContent =
+    userEmail;
+
+
+/* Create initials */
+
+const firstLetter =
+    userEmail.charAt(0).toUpperCase();
+
+document.getElementById("avatarTop").textContent =
+    firstLetter;
+
+document.getElementById("profileAvatar").textContent =
+    firstLetter;
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
+
+const navButtons =
+    document.querySelectorAll(".nav button[data-page]");
+
+const pages =
+    document.querySelectorAll(".page");
+
+
+function showPage(pageName) {
+
+    pages.forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+
+    const target =
+        document.getElementById(pageName);
+
+    if (target) {
+
+        target.classList.add("active");
+
+    }
+
+
+    navButtons.forEach(function(button){
+
+        button.classList.remove("active");
+
+        if (
+            button.dataset.page === pageName
+        ) {
+
+            button.classList.add("active");
+
+        }
+
+    });
+
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+navButtons.forEach(function(button){
+
+    button.addEventListener(
+        "click",
+        function(){
+
+            showPage(
+                button.dataset.page
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+document
+    .getElementById("menuBtn")
+    .addEventListener(
+        "click",
+        function(){
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("open");
+
+        }
+    );
+
+
+/* =========================================================
+   SETTINGS TOGGLES
+========================================================= */
+
+document
+    .querySelectorAll(".toggle")
+    .forEach(function(toggle){
+
+        toggle.addEventListener(
+            "click",
+            function(){
+
+                toggle.classList.toggle("on");
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        function(){
+
+            localStorage.removeItem(
+                "loggedInEmail"
+            );
+
+            localStorage.removeItem(
+                "stacklyUser"
+            );
+
+            sessionStorage.removeItem(
+                "loggedInEmail"
+            );
+
+            sessionStorage.removeItem(
+                "stacklyUser"
+            );
+
+
+            /*
+               Because you requested only two dashboard
+               files, we return to the login page only
+               if it exists in your project.
+            */
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+function logout() {
+    localStorage.removeItem("loggedInEmail");
+    localStorage.removeItem("loggedInRole");
+    sessionStorage.clear();
+
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

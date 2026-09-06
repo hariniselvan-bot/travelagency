@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Stackly Travel Booking Platform</title>
+  <meta name="description" content="Since 2011 Stackly has helped a million explorers travel better. Meet the team and the story behind the platform.">
+  <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+  <link rel="stylesheet" href="css/style.css">
+
+<style>
+/* =========================================================
+   SAME HEADER + MOBILE HAMBURGER BEHAVIOUR AS INDEX
+   ========================================================= */
+@media (max-width: 768px) {
+  .site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+
+  .site-header .container {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-header .header-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  /* Hide Sign Up from the header on mobile, same as index */
+  .site-header .header-actions [data-auth="guest"] a[href="register.html"] {
+    display: none !important;
+  }
+
+  .site-header .header-actions [data-auth="guest"] {
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* Guaranteed-visible hamburger */
+  .site-header .nav-toggle,
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    border: 0 !important;
+    background: #ff6b2c !important;
+    color: #fff !important;
+    box-shadow: 0 5px 16px rgba(255,107,44,.28) !important;
+    outline: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    z-index: 10001 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    cursor: pointer !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines {
+    width: 22px !important;
+    height: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines i {
+    display: block !important;
+    width: 22px !important;
+    height: 2.5px !important;
+    min-height: 2.5px !important;
+    background: #fff !important;
+    border-radius: 99px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Full-screen mobile panel */
+  .mobile-menu {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    box-sizing: border-box !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .mobile-menu .mobile-close {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-menu .mobile-close svg {
+    width: 22px !important;
+    height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+  }
+
+  .mobile-menu .mnav.active {
+    color: #ff6b2c !important;
+    font-weight: 800 !important;
+  }
+
+  .mobile-menu .mnav.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    bottom: -3px !important;
+    width: 32px !important;
+    height: 3px !important;
+    border-radius: 99px !important;
+    background: #ff6b2c !important;
+  }
+}
+</style>
+
+
+
+
+
+<style>
+/* ===== About story collage: image + badge + overlapping map image ===== */
+.about-media{
+  position:relative !important;
+  min-height:560px !important;
+  isolation:isolate !important;
+}
+
+.about-media .main-img{
+  position:absolute !important;
+  top:25px !important;
+  left:0 !important;
+  width:calc(100% - 15px) !important;
+  height:430px !important;
+  z-index:1 !important;
+  overflow:hidden !important;
+  border-radius:0 0 38px 38px !important;
+  box-shadow:0 24px 55px rgba(12,59,57,.13) !important;
+}
+
+.about-media .main-img img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+
+.about-media .about-badge{
+  position:absolute !important;
+  top:0 !important;
+  left:-2px !important;
+  z-index:5 !important;
+  width:150px !important;
+  height:150px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border-radius:50% !important;
+  background:#ff6b2c !important;
+  color:#fff !important;
+  text-align:center !important;
+  box-shadow:0 18px 35px rgba(12,59,57,.15) !important;
+}
+
+.about-media .about-badge strong{
+  display:block !important;
+  color:#fff !important;
+  font-family:var(--font-display) !important;
+  font-size:2.7rem !important;
+  line-height:.9 !important;
+  font-weight:800 !important;
+  margin:0 0 7px !important;
+}
+
+.about-media .about-badge span{
+  display:block !important;
+  color:#fff !important;
+  font-size:.76rem !important;
+  line-height:1.15 !important;
+  font-weight:800 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+  max-width:105px !important;
+}
+
+.about-media .sub-img{
+  position:absolute !important;
+  right:0 !important;
+  bottom:0 !important;
+  width:62% !important;
+  height:245px !important;
+  z-index:4 !important;
+  margin:0 !important;
+  padding:10px !important;
+  border-radius:28px !important;
+  background:#fbf5eb !important;
+  box-shadow:0 22px 45px rgba(12,59,57,.16) !important;
+}
+
+.about-media .sub-img img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  border-radius:17px !important;
+}
+
+@media(max-width:900px){
+  .about-media{
+    min-height:520px !important;
+  }
+
+  .about-media .main-img{
+    height:390px !important;
+    width:calc(100% - 5px) !important;
+  }
+
+  .about-media .sub-img{
+    width:60% !important;
+    height:220px !important;
+  }
+}
+
+@media(max-width:600px){
+  .about-media{
+    min-height:455px !important;
+    margin-bottom:10px !important;
+  }
+
+  .about-media .main-img{
+    top:20px !important;
+    left:0 !important;
+    width:100% !important;
+    height:335px !important;
+    border-radius:0 0 28px 28px !important;
+  }
+
+  .about-media .about-badge{
+    top:0 !important;
+    left:0 !important;
+    width:112px !important;
+    height:112px !important;
+  }
+
+  .about-media .about-badge strong{
+    font-size:2rem !important;
+    margin-bottom:5px !important;
+  }
+
+  .about-media .about-badge span{
+    font-size:.58rem !important;
+    max-width:80px !important;
+  }
+
+  .about-media .sub-img{
+    right:5% !important;
+    bottom:0 !important;
+    width:65% !important;
+    height:175px !important;
+    padding:7px !important;
+    border-radius:20px !important;
+  }
+
+  .about-media .sub-img img{
+    border-radius:13px !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== Team people photos ===== */
+.team-person-card{
+  text-align:center !important;
+  overflow:hidden !important;
+}
+
+.team-person-photo{
+  width:118px;
+  height:118px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#e7f1ef;
+  border:5px solid #fff;
+  box-shadow:0 10px 26px rgba(12,59,57,.14);
+}
+
+.team-person-photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .4s ease;
+}
+
+.team-person-card:hover .team-person-photo img{
+  transform:scale(1.06);
+}
+
+@media(max-width:900px){
+  .team-people-grid{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+}
+
+@media(max-width:600px){
+  .team-people-grid{
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+
+  .team-person-photo{
+    width:105px;
+    height:105px;
+  }
+}
+</style>
+
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="preloader-logo">
+      <img src="svg/logo.svg" alt="Stackly logo">
+      <span>Stack<em>ly</em></span>
+    </div>
+    <div class="preloader-bar"><i></i></div>
+    <div class="preloader-tag">Packing your bags…</div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="img/logo.webp" alt="Stackly">
+        <span>Stackly<small>Travel Booking Platform</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="services.html">Services</a>
+        <a href="offer.html">Offers</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-pill" type="button" aria-label="Language">
+          <svg><use href="svg/sprite.svg#i-globe"/></svg> EN
+        </button>
+        <span data-auth="guest" style="display:flex;gap:.6rem">
+          <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+        </span>
+        <span data-auth="user" style="display:none">
+          <a data-dash-link href="404.html" class="btn btn-dark btn-sm">
+            <svg><use href="svg/sprite.svg#i-dash"/></svg> Dashboard
+          </a>
+        </span>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+          <span class="hamburger-lines" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <button class="mobile-close" aria-label="Close menu">
+      <svg><use href="svg/sprite.svg#i-close"/></svg>
+    </button>
+    <a class="mnav" href="index.html"><span>01</span>Home</a>
+    <a class="mnav active" href="about.html"><span>02</span>About</a>
+    <a class="mnav" href="services.html"><span>03</span>Services</a>
+    <a class="mnav" href="offer.html"><span>04</span>Offers</a>
+    <a class="mnav" href="blog.html"><span>05</span>Blog</a>
+    <a class="mnav" href="contact.html"><span>06</span>Contact</a>
+    <div class="mm-actions">
+      <a href="login.html" class="btn btn-white">Login</a>
+      <a href="register.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </div>
+  </div>
+
+  <main>
+    <!-- Page hero -->
+    <section class="page-hero">
+      <div class="container">
+        <nav class="crumbs" data-aos="fade-down"><a href="index.html">Home</a><i>/</i><span>About</span></nav>
+        <div class="script" style="font-size:1.7rem">Fifteen years of wanderlust</div>
+        <h1 data-splitting>The story behind Stackly</h1>
+        <p class="lead">Two backpacks, one night train through the Alps, and an idea: booking travel should feel as good as the trip itself.</p>
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section class="section">
+      <div class="container about-grid">
+        <div class="about-media" data-aos="fade-right">
+          <div class="about-badge"><strong>15+</strong><span>Years of travel craft</span></div>
+          <div class="main-img"><img data-parallax="0.08" src="img/about-1.webp" alt="Lush rice terraces"></div>
+          <div class="sub-img" data-aos="zoom-in" data-aos-delay="200"><img src="img/about-2.webp" alt="Planning a journey on a map"></div>
+        </div>
+        <div>
+          <span class="eyebrow" data-aos="fade-up">Our Story</span>
+          <h2 class="h-xxl" data-splitting>From a night train to 98k travellers a year</h2>
+          <p class="lead" data-aos="fade-up" style="margin:1.2rem 0">
+            Stackly began in 2011 when our founders missed a connection in Zurich and discovered
+            the best view of their lives by accident. Today we're a 120-person team across four
+            time zones, obsessed with one thing: removing every ounce of friction between you
+            and the journey.
+          </p>
+          <p data-aos="fade-up" data-aos-delay="80" style="color:var(--ink-70)">
+            We partner directly with 900+ airlines, hotel groups and local guides, and our
+            pricing engine scans fares every 15 minutes. But the tech is only half of it —
+            every itinerary is sanity-checked by a human who has actually been there.
+          </p>
+          <ul class="about-list" data-aos="fade-up" data-aos-delay="140">
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>Independent & traveller-owned</li>
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>1.2M verified stays worldwide</li>
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>Carbon-aware routing options</li>
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>4.9★ average traveller rating</li>
+          </ul>
+          <div class="about-sign" data-aos="fade-up" data-aos-delay="200">
+            <div class="sig">Aarav Mehta</div>
+            <div class="who"><strong>Aarav Mehta</strong><span>Founder & Chief Explorer</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="section tinted">
+      <div class="container">
+        <div class="section-head" style="justify-content:center;text-align:center">
+          <div style="margin-inline:auto">
+            <span class="eyebrow" style="justify-content:center" data-aos="fade-up">What we believe</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Three promises</div>
+            <h2 class="h-xxl" data-splitting>Values we travel by</h2>
+          </div>
+        </div>
+        <div class="svc-grid">
+          <div class="svc-card" data-aos="fade-up">
+            <span class="num">01</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-shield"/></svg></div>
+            <h3>Honest pricing</h3>
+            <p>The price you see is the price you pay. No drip fees, no dark patterns, no "resort fees" invented at checkout.</p>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="100">
+            <span class="num">02</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-heart"/></svg></div>
+            <h3>Humans first</h3>
+            <p>Algorithms find the deals; people make the calls. Every support chat starts with a human, not a bot maze.</p>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="200">
+            <span class="num">03</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-globe"/></svg></div>
+            <h3>Lighter footprints</h3>
+            <p>We label lower-carbon routes and stays, and invest 1% of revenue in reforestation along popular routes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card" data-aos="fade-up"><div class="stat-num"><span data-count="120">0</span><sup>+</sup></div><p>Destinations worldwide</p></div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="80"><div class="stat-num"><span data-count="98">0</span><sup>K</sup></div><p>Happy travellers yearly</p></div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="160"><div class="stat-num"><span data-count="900">0</span><sup>+</sup></div><p>Airline & hotel partners</p></div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="240"><div class="stat-num"><span data-count="240">0</span><sup>+</sup></div><p>Team members & local guides</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section tinted">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-aos="fade-up">The crew</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Meet your travel nerds</div>
+            <h2 class="h-xxl" data-splitting>The people behind the platform</h2>
+          </div>
+        </div>
+        <div class="stats-grid team-people-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stat-card team-person-card" data-aos="fade-up">
+            <div class="team-person-photo">
+              <img src="img/aarav.webp" alt="Aarav Mehta">
+            </div>
+            <strong style="font-family:var(--font-display);font-size:1.2rem">Aarav Mehta</strong>
+            <p style="color:var(--ink-50);margin-top:.2rem">Founder & Chief Explorer</p>
+          </div>
+
+          <div class="stat-card team-person-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="team-person-photo">
+              <img src="img/sofia.webp" alt="Sofia Keller">
+            </div>
+            <strong style="font-family:var(--font-display);font-size:1.2rem">Sofia Keller</strong>
+            <p style="color:var(--ink-50);margin-top:.2rem">Head of Product</p>
+          </div>
+
+          <div class="stat-card team-person-card" data-aos="fade-up" data-aos-delay="160">
+            <div class="team-person-photo">
+              <img src="img/david.webp" alt="David Okafor">
+            </div>
+            <strong style="font-family:var(--font-display);font-size:1.2rem">David Okafor</strong>
+            <p style="color:var(--ink-50);margin-top:.2rem">Partnerships Lead</p>
+          </div>
+
+          <div class="stat-card team-person-card" data-aos="fade-up" data-aos-delay="240">
+            <div class="team-person-photo">
+              <img src="img/lena.webp" alt="Lena Torres">
+            </div>
+            <strong style="font-family:var(--font-display);font-size:1.2rem">Lena Torres</strong>
+            <p style="color:var(--ink-50);margin-top:.2rem">Traveller Experience</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta" data-aos="zoom-in">
+          <img class="cta-bg" src="img/cta-bg.webp" alt="" aria-hidden="true">
+          <span class="script" style="font-size:1.9rem">Come wander with us</span>
+          <h2 class="h-xxl">Your journey starts with one click</h2>
+          <p>Create a free account and set your first price alert in under a minute.</p>
+          <a href="register.html" class="btn btn-primary">Join Stackly Free <svg><use href="svg/sprite.svg#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-about">
+          <a href="index.html" class="brand">
+            <img src="img/logo.webp" alt="Stackly">
+            <span>Stackly<small>Travel Booking Platform</small></span>
+          </a>
+          <p>Flights, stays, packages and experiences — crafted into journeys you'll tell stories about. Your journey, our priority.</p>
+          <div class="socials">
+            <a href="404.html" aria-label="Facebook"><svg><use href="svg/sprite.svg#i-facebook"/></svg></a>
+            <a href="404.html" aria-label="Twitter / X"><svg><use href="svg/sprite.svg#i-twitter"/></svg></a>
+            <a href="404.html" aria-label="Instagram"><svg><use href="svg/sprite.svg#i-instagram"/></svg></a>
+            <a href="404.html" aria-label="LinkedIn"><svg><use href="svg/sprite.svg#i-linkedin"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="home.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Home</a></li>
+            <li><a href="about.html"><svg><use href="svg/sprite.svg#i-check"/></svg>About</a></li>
+            <li><a href="services.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Service</a></li>
+            <li><a href="offer.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Offer</a></li>
+            <li><a href="blog.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Blog</a></li>
+            <li><a href="contact.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>FAQ</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Pricing</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>My bookings</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Help center</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Cancellations</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul class="footer-contact">
+            <li><svg><use href="svg/sprite.svg#i-pin"/></svg>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</li>
+            <li><svg><use href="svg/sprite.svg#i-phone"/></svg>+91 70107 92745</li>
+            <li><svg><use href="svg/sprite.svg#i-mail"/></svg>info@stackly.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Stackly Travel Co. All rights reserved.</span>
+        <span>Made for explorers · <a href="register.html">Join us</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><svg><use href="svg/sprite.svg#i-arrow"/></svg></button>
+
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/icon-fallback.js"></script>
+
+<script>
+(function () {
+  const currentPage =
+    (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+
+  document.querySelectorAll('.mobile-menu .mnav').forEach(function (link) {
+    const href = (link.getAttribute('href') || '').toLowerCase().split('#')[0] || 'index.html';
+    const active = href === currentPage;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+})();
+</script>
+
+</body>
+</html>

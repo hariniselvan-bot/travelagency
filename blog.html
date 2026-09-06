@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Journal — Stackly Blog</title>
+  <meta name="description" content="Flight hacks, destination guides and packing systems — field notes from the Stackly travel team.">
+  <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+  <link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ===== Same Index header + mobile behavior ===== */
+@media (max-width: 768px) {
+  .site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+
+  .site-header .container {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-header .header-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  /* Hide Sign Up from the mobile header */
+  .site-header .header-actions [data-auth="guest"] a[href="register.html"] {
+    display: none !important;
+  }
+
+  .site-header .header-actions [data-auth="guest"] {
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* Always-visible orange hamburger */
+  .site-header .nav-toggle,
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: #ff6b2c !important;
+    color: #fff !important;
+    box-shadow: 0 5px 16px rgba(255,107,44,.28) !important;
+    outline: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    z-index: 10001 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines {
+    width: 22px !important;
+    height: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines i {
+    display: block !important;
+    width: 22px !important;
+    height: 2.5px !important;
+    min-height: 2.5px !important;
+    background: #fff !important;
+    border-radius: 99px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .mobile-menu {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    box-sizing: border-box !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .mobile-menu .mobile-close {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-menu .mobile-close svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .mobile-menu .mnav.active {
+    color: #ff6b2c !important;
+    font-weight: 800 !important;
+  }
+
+  .mobile-menu .mnav.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    bottom: -3px !important;
+    width: 32px !important;
+    height: 3px !important;
+    border-radius: 99px !important;
+    background: #ff6b2c !important;
+  }
+}
+</style>
+
+
+<style>
+/* Blog action icons — use travel compass instead of arrows */
+.blog-card .link-arrow svg,
+.dest-card .btn svg,
+.footer-col a svg {
+  transition: transform .25s ease;
+}
+
+.blog-card .link-arrow:hover svg,
+.dest-card .btn:hover svg {
+  transform: rotate(12deg) scale(1.08);
+}
+</style>
+
+
+<style>
+.news-form input.input-error {
+  border: 1.5px solid #ff6b2c !important;
+  box-shadow: 0 0 0 3px rgba(255,107,44,.10) !important;
+  outline: none !important;
+}
+</style>
+
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="preloader-logo">
+      <img src="svg/logo.svg" alt="Stackly logo">
+      <span>Stack<em>ly</em></span>
+    </div>
+    <div class="preloader-bar"><i></i></div>
+    <div class="preloader-tag">Packing your bags…</div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="img/logo.webp" alt="Stackly">
+        <span>Stackly<small>Travel Booking Platform</small></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="offer.html">Offers</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="lang-pill" type="button" aria-label="Language">
+          <svg><use href="svg/sprite.svg#i-globe"/></svg> EN
+        </button>
+
+        <span data-auth="guest" style="display:flex;gap:.6rem">
+          <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+        </span>
+
+        <span data-auth="user" style="display:none">
+          <a data-dash-link href="404.html" class="btn btn-dark btn-sm">
+            <svg><use href="svg/sprite.svg#i-dash"/></svg> Dashboard
+          </a>
+        </span>
+
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+          <span class="hamburger-lines" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <button class="mobile-close" aria-label="Close menu">
+      <svg><use href="svg/sprite.svg#i-close"/></svg>
+    </button>
+
+    <a class="mnav" href="index.html"><span>01</span>Home</a>
+    <a class="mnav" href="about.html"><span>02</span>About</a>
+    <a class="mnav" href="services.html"><span>03</span>Services</a>
+    <a class="mnav" href="offer.html"><span>04</span>Offers</a>
+    <a class="mnav active" href="blog.html"><span>05</span>Blog</a>
+    <a class="mnav" href="contact.html"><span>06</span>Contact</a>
+
+    <div class="mm-actions">
+      <a href="login.html" class="btn btn-white">Login</a>
+      <a href="register.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </div>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <nav class="crumbs" data-aos="fade-down"><a href="index.html">Home</a><i>/</i><span>Blog</span></nav>
+        <div class="script" style="font-size:1.7rem">Field notes & fare hacks</div>
+        <h1 data-splitting>The Stackly Journal</h1>
+        <p class="lead">Practical guides from people who fly 100k+ miles a year — so your next trip is smoother than our last one.</p>
+      </div>
+    </section>
+
+    <!-- Featured post -->
+    <section class="section" style="padding-top:2rem">
+      <div class="container">
+        <article class="dest-card dc-1" data-aos="zoom-in" style="display:block;min-height:440px;grid-column:auto">
+          <img src="img/blog-1.webp" alt="Airplane window above the clouds at sunrise">
+          <div class="dtop"><span class="dtag">Featured · Flight Hacks</span></div>
+          <div class="dbody" style="max-width:640px">
+            <div class="dmeta" style="margin-bottom:.5rem">
+              <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Sep 1, 2026</span>
+              <span><svg><use href="svg/sprite.svg#i-clock"/></svg>8 min read</span>
+            </div>
+            <h3 style="font-size:clamp(1.6rem,3vw,2.4rem)">The Tuesday trick: when to actually book the cheapest flights</h3>
+            <p style="opacity:.9;margin:.6rem 0 1.2rem">We analysed 40 million fare searches to find the real booking windows — and the myths you can safely ignore.</p>
+            <span class="btn btn-white btn-sm">Read the story <svg><use href="svg/sprite.svg#i-compass"/></svg></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Post grid -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="blog-grid">
+          <article class="blog-card" data-aos="fade-up">
+            <div class="blog-thumb"><img src="img/blog-2.webp" alt="Aurora over a mountain"><span class="blog-cat">Destinations</span></div>
+            <div class="blog-body">
+              <div class="blog-meta"><span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Aug 21, 2026</span><span><svg><use href="svg/sprite.svg#i-clock"/></svg>9 min</span></div>
+              <h3><a href="blog.html">Chasing the aurora: a first-timer's field guide to Iceland</a></h3>
+              <p>Where to stand, when to go, and why the forecast apps only tell half the story.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="blog-thumb"><img src="img/blog-3.webp" alt="Packed suitcase"><span class="blog-cat">Packing</span></div>
+            <div class="blog-body">
+              <div class="blog-meta"><span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Aug 14, 2026</span><span><svg><use href="svg/sprite.svg#i-clock"/></svg>5 min</span></div>
+              <h3><a href="blog.html">Carry-on only: the 7 kg packing system that changed how we travel</a></h3>
+              <p>One bag, three weeks, zero checked-luggage queues. Here's the exact kit list.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="160">
+            <div class="blog-thumb"><img src="img/dest-kyoto.webp" alt="Torii gates in Kyoto"><span class="blog-cat">Destinations</span></div>
+            <div class="blog-body">
+              <div class="blog-meta"><span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Aug 7, 2026</span><span><svg><use href="svg/sprite.svg#i-clock"/></svg>7 min</span></div>
+              <h3><a href="blog.html">Kyoto without the crowds: dawn routes through the old capital</a></h3>
+              <p>The temples open before the buses arrive. A photographer's hour-by-hour plan.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up">
+            <div class="blog-thumb"><img src="img/dest-santorini.webp" alt="Santorini blue domes"><span class="blog-cat">Island Guides</span></div>
+            <div class="blog-body">
+              <div class="blog-meta"><span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Jul 30, 2026</span><span><svg><use href="svg/sprite.svg#i-clock"/></svg>6 min</span></div>
+              <h3><a href="blog.html">Santorini on a sensible budget (yes, it's possible)</a></h3>
+              <p>Shoulder-season ferries, village stays and the caldera view without the caldera price.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="blog-thumb"><img src="img/dest-bali.webp" alt="Bali rice terrace swing"><span class="blog-cat">Experiences</span></div>
+            <div class="blog-body">
+              <div class="blog-meta"><span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Jul 22, 2026</span><span><svg><use href="svg/sprite.svg#i-clock"/></svg>10 min</span></div>
+              <h3><a href="blog.html">Bali beyond the swing: five valleys the day-trippers miss</a></h3>
+              <p>Rent the scooter, skip the queue, find the quiet. A local guide shares his map.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="160">
+            <div class="blog-thumb"><img src="img/dest-swiss.webp" alt="Swiss lakeside village"><span class="blog-cat">Rail Journeys</span></div>
+            <div class="blog-body">
+              <div class="blog-meta"><span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Jul 15, 2026</span><span><svg><use href="svg/sprite.svg#i-clock"/></svg>8 min</span></div>
+              <h3><a href="blog.html">The Alps by rail: the panoramic routes worth slowing down for</a></h3>
+              <p>Glacier Express vs. GoldenPass — an honest comparison with seat recommendations.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="newsletter" data-aos="fade-up">
+          <div style="position:relative;z-index:1">
+            <h2 class="h-lg">Never miss a story (or a sale)</h2>
+            <p style="color:var(--ink-70)">Journal entries plus member-only fares, once a week.</p>
+          </div>
+          <form class="news-form" data-demo="You're on the list! First deal drops this Friday.">
+            <input type="email" placeholder="you@example.com" aria-label="Email address">
+            <button class="btn btn-primary" type="submit">Subscribe <svg><use href="svg/sprite.svg#i-send"/></svg></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-about">
+          <a href="index.html" class="brand">
+            <img src="img/logo.webp" alt="Stackly">
+            <span>Stackly<small>Travel Booking Platform</small></span>
+          </a>
+          <p>Flights, stays, packages and experiences — crafted into journeys you'll tell stories about. Your journey, our priority.</p>
+
+          <div class="socials">
+            <a href="404.html" aria-label="Facebook"><svg><use href="svg/sprite.svg#i-facebook"/></svg></a>
+            <a href="404.html" aria-label="Twitter / X"><svg><use href="svg/sprite.svg#i-twitter"/></svg></a>
+            <a href="404.html" aria-label="Instagram"><svg><use href="svg/sprite.svg#i-instagram"/></svg></a>
+            <a href="404.html" aria-label="LinkedIn"><svg><use href="svg/sprite.svg#i-linkedin"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="home.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Home</a></li>
+            <li><a href="about.html"><svg><use href="svg/sprite.svg#i-check"/></svg>About</a></li>
+            <li><a href="services.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Service</a></li>
+            <li><a href="offer.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Offer</a></li>
+            <li><a href="blog.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Blog</a></li>
+            <li><a href="contact.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>FAQ</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Pricing</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>My bookings</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Help center</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Cancellations</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul class="footer-contact">
+<li><svg><use href="svg/sprite.svg#i-pin"/></svg>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</li>
+            <li><svg><use href="svg/sprite.svg#i-phone"/></svg>+91 70107 92745</li>
+            <li><svg><use href="svg/sprite.svg#i-mail"/></svg>info@stackly.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Stackly Travel Co. All rights reserved.</span>
+        <span>Made for explorers · <a href="register.html">Join us</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><svg><use href="svg/sprite.svg#i-compass"/></svg></button>
+
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/icon-fallback.js"></script>
+
+<script>
+(function () {
+  const currentPage =
+    (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+
+  document.querySelectorAll('.mobile-menu .mnav').forEach(function (link) {
+    const href = (link.getAttribute('href') || '').toLowerCase().split('#')[0] || 'index.html';
+    const active = href === currentPage;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+})();
+</script>
+
+
+<script>
+/* ===== Newsletter JavaScript validation ===== */
+(function () {
+  const forms = document.querySelectorAll('.news-form');
+
+  forms.forEach(function (form) {
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button[type="submit"]');
+
+    if (!input || !button) return;
+
+    let error = form.querySelector('.js-form-error');
+
+    if (!error) {
+      error = document.createElement('div');
+      error.className = 'js-form-error';
+      error.setAttribute('role', 'alert');
+      error.style.cssText = `
+        display:none;
+        width:100%;
+        margin-top:10px;
+        padding:10px 13px;
+        border-radius:10px;
+        background:#fff0ed;
+        border:1px solid rgba(255,107,44,.25);
+        color:#c94b28;
+        font-size:.82rem;
+        font-weight:600;
+        line-height:1.4;
+        box-sizing:border-box;
+      `;
+      form.appendChild(error);
+    }
+
+    function showError(message) {
+      error.textContent = message;
+      error.style.display = 'block';
+      error.style.background = '#fff0ed';
+      error.style.borderColor = 'rgba(255,107,44,.25)';
+      error.style.color = '#c94b28';
+      input.classList.add('input-error');
+    }
+
+    function clearError() {
+      error.textContent = '';
+      error.style.display = 'none';
+      input.classList.remove('input-error');
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      clearError();
+
+      const email = input.value.trim();
+
+      if (email === '') {
+        showError('Please enter your email address.');
+        input.focus();
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      if (!emailPattern.test(email)) {
+        showError('Please enter a valid email address.');
+        input.focus();
+        return;
+      }
+
+      /* Valid email -> redirect to 404 */
+      window.location.href = '404.html';
+    });
+
+    input.addEventListener('input', function () {
+      if (error.style.display === 'block') {
+        clearError();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

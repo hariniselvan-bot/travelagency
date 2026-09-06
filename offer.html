@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly — Offers | Travel Deals & Holiday Offers</title>
+  <meta name="description" content="Stackly offers — discover limited-time flight, hotel and holiday deals with transparent pricing and curated travel savings.">
+  <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+  <link rel="stylesheet" href="css/style.css">
+<style>
+/* Hero side cards — contained in the right column, no image overlap */
+.hero-grid{
+  grid-template-columns:minmax(0,1fr) minmax(300px,420px);
+  align-items:center;
+}
+.hero-side-cards{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  width:min(100%,380px);
+  margin-left:auto;
+  position:relative;
+  z-index:2;
+}
+.hero-info-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:18px;
+  background:rgba(255,255,255,.13);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 14px 35px rgba(0,0,0,.16);
+  color:#fff;
+}
+.hero-card-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(244,185,66,.92);
+  color:#0C3B39;
+  font-size:20px;
+  font-weight:800;
+}
+.hero-info-card strong{
+  display:block;
+  font-size:.98rem;
+  line-height:1.2;
+}
+.hero-info-card small{
+  display:block;
+  margin-top:4px;
+  color:rgba(255,255,255,.78);
+  font-size:.78rem;
+}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-side-cards{
+    width:100%;
+    max-width:560px;
+    margin:10px auto 0;
+  }
+  .hero-info-card{padding:13px 15px;}
+}
+@media (max-width:520px){
+  .hero-side-cards{gap:9px;}
+  .hero-info-card{border-radius:14px;padding:11px 13px;}
+  .hero-card-icon{width:36px;height:36px;flex-basis:36px;font-size:17px;}
+}
+
+/* Hero readability fix: keep the Santorini image, but make all hero text clear */
+.hero .hero-copy,
+.hero .hero-copy h1,
+.hero .hero-copy p,
+.hero .hero-copy .hero-trust strong,
+.hero .hero-copy .hero-trust span {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,.28);
+}
+
+.hero .hero-copy .hero-script {
+  color: #ff6b2c !important;
+  text-shadow: 0 2px 5px rgba(0,0,0,.22);
+}
+
+.hero .hero-copy .hero-trust .ticon {
+  background: #ffffff !important;
+  color: #0c6f6b !important;
+}
+
+.hero .hero-copy .btn-ghost {
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,.9) !important;
+  background: rgba(12,59,57,.18) !important;
+}
+
+.hero .hero-copy .btn-ghost:hover {
+  color: #0c3b39 !important;
+  background: #ffffff !important;
+}
+
+/* Slightly stronger image overlay for readability */
+.hero {
+  background-image: linear-gradient(rgba(6,48,48,.62), rgba(6,48,48,.58)), url('img/dest-santorini.webp') !important;
+}
+
+
+/* About section overlap fix: keep the 15+ badge fully visible */
+.about-media {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.about-media .about-badge {
+  position: absolute !important;
+  z-index: 10 !important;
+}
+
+.about-media .main-img,
+.about-media .sub-img {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.about-media .sub-img {
+  z-index: 3 !important;
+}
+
+
+/* About section: move the secondary travel image to the right as an overlap */
+.about-media {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.about-media .sub-img {
+  position: absolute !important;
+  z-index: 4 !important;
+  right: -70px !important;
+  left: auto !important;
+  bottom: -45px !important;
+}
+
+
+/* ===== Testimonials — redesigned ===== */
+section.section.tinted:has(.testi-wrap) {
+  position: relative;
+  overflow: hidden;
+  padding: 110px 0 120px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(255,107,44,.10), transparent 28%),
+    radial-gradient(circle at 92% 82%, rgba(12,111,107,.10), transparent 30%),
+    #f7f3ec;
+}
+
+section.section.tinted:has(.testi-wrap) .section-head {
+  margin-bottom: 48px;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+section.section.tinted:has(.testi-wrap) .section-head > div {
+  margin-inline: 0 !important;
+  max-width: 760px;
+}
+
+section.section.tinted:has(.testi-wrap) .eyebrow {
+  justify-content: flex-start !important;
+  color: var(--teal);
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+section.section.tinted:has(.testi-wrap) .script {
+  color: var(--orange);
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  margin: 8px 0 4px;
+}
+
+section.section.tinted:has(.testi-wrap) .h-xxl {
+  margin: 0;
+  max-width: 700px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-wrap {
+  position: relative;
+  overflow: visible;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 8px 4px 24px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-track {
+  display: flex !important;
+  gap: 22px;
+  width: 100% !important;
+  transform: translate3d(0,0,0);
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-track.is-dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-slide {
+  flex: 0 0 calc((100% - 44px) / 3);
+  width: calc((100% - 44px) / 3) !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-card {
+  position: relative;
+  height: 100%;
+  min-height: 330px;
+  padding: 34px 30px 28px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(12,59,57,.10);
+  border-radius: 28px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 18px 50px rgba(12,59,57,.09);
+  transition: transform .35s ease, box-shadow .35s ease;
+  overflow: hidden;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--orange), var(--teal));
+}
+
+section.section.tinted:has(.testi-wrap) .testi-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 25px 60px rgba(12,59,57,.14);
+}
+
+section.section.tinted:has(.testi-wrap) .qic {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  background: #e8f3f0;
+  color: var(--teal);
+}
+
+section.section.tinted:has(.testi-wrap) .qic svg {
+  width: 25px;
+  height: 25px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #183f3d;
+  font-weight: 500;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-stars {
+  display: flex;
+  gap: 4px;
+  margin-top: 24px;
+  color: #f4b942;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-stars svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-who {
+  margin-top: auto;
+  padding-top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(12,59,57,.09);
+}
+
+section.section.tinted:has(.testi-wrap) .testi-ava {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-who strong {
+  display: block;
+  color: #0c3b39;
+  font-size: .94rem;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-who span {
+  display: block;
+  margin-top: 3px;
+  color: #70807e;
+  font-size: .78rem;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-nav {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(12,59,57,.16);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--teal);
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn:hover {
+  color: #fff;
+  background: var(--teal);
+  border-color: var(--teal);
+  transform: translateY(-2px);
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn.prev svg {
+  transform: rotate(180deg);
+}
+
+section.section.tinted:has(.testi-wrap) .testi-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(12,59,57,.22);
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-dots button.active {
+  width: 26px;
+  border-radius: 10px;
+  background: var(--orange);
+}
+
+@media (max-width: 900px) {
+  section.section.tinted:has(.testi-wrap) {
+    padding: 85px 0 95px;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-slide {
+    flex-basis: calc((100% - 22px) / 2);
+    width: calc((100% - 22px) / 2) !important;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-card {
+    min-height: 310px;
+  }
+}
+
+@media (max-width: 600px) {
+  section.section.tinted:has(.testi-wrap) {
+    padding: 70px 0 80px;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-slide {
+    flex-basis: 100%;
+    width: 100% !important;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-card {
+    padding: 28px 22px 24px;
+    border-radius: 22px;
+  }
+}
+
+section.section.tinted:has(.testi-wrap) .testi-ava {
+  overflow: hidden;
+  position: relative;
+  background: #e8f3f0 !important;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-ava img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+</style>
+
+
+<style>
+section.section.tinted:has(.testi-wrap),
+section.section.tinted:has(.testi-wrap) .testi-wrap {
+  visibility: visible;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-track {
+  opacity: 1;
+}
+/* Button icon refresh — no directional arrow icons */
+.btn svg, .link-arrow svg, .dgo svg, .testi-btn svg, #toTop svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+.link-arrow svg { transition: transform .25s ease; }
+.link-arrow:hover svg { transform: scale(1.12); }
+</style>
+
+
+<style>
+/* =========================================================
+   MOBILE HAMBURGER FIX
+   Prevent the menu button / SVG from becoming a giant circle
+   after the first click.
+   ========================================================= */
+@media (max-width: 768px) {
+
+  .site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+
+  .site-header .container {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-header .header-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  /* Hide Sign Up on mobile */
+  .site-header .header-actions [data-auth="guest"] a[href="register.html"] {
+    display: none !important;
+  }
+
+  /* Login stays normal */
+  .site-header .header-actions [data-auth="guest"] {
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* IMPORTANT: lock hamburger size */
+  .site-header .nav-toggle,
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    border: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+  }
+
+  .site-header .nav-toggle svg,
+  .site-header .nav-toggle svg use {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    display: block !important;
+    flex: 0 0 22px !important;
+    transform: none !important;
+  }
+
+  /* Mobile menu must remain a proper full-screen panel */
+  .mobile-menu {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    box-sizing: border-box !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .mobile-menu .mobile-close {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-menu .mobile-close svg {
+    width: 22px !important;
+    height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+  }
+
+  /* Active mobile page */
+  .mobile-menu .mnav.active {
+    color: #ff6b2c !important;
+    font-weight: 800 !important;
+  }
+
+  .mobile-menu .mnav.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    bottom: -3px !important;
+    width: 32px !important;
+    height: 3px !important;
+    border-radius: 99px !important;
+    background: #ff6b2c !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== Guaranteed-visible mobile hamburger ===== */
+@media (max-width: 768px) {
+  .site-header .nav-toggle {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: #ff6b2c !important;
+    color: #fff !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: 0 5px 16px rgba(255,107,44,.28) !important;
+
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    z-index: 10001 !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    transform: none !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines {
+    width: 22px !important;
+    height: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines i {
+    display: block !important;
+    width: 22px !important;
+    height: 2.5px !important;
+    min-height: 2.5px !important;
+    background: #fff !important;
+    border-radius: 99px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    background: #ff6b2c !important;
+    color: #fff !important;
+    transform: none !important;
+  }
+}
+</style>
+
+
+<style>
+/* =========================================================
+   STACKLY OFFERS PAGE
+   Uses the same design tokens/components as index.html.
+   ========================================================= */
+.offer-hero{
+  min-height: 72vh;
+  display:grid;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(12,59,57,.88),rgba(12,59,57,.48)),
+    url('img/dest-bali.webp') center/cover no-repeat;
+  color:#fff;
+}
+.offer-hero .container{position:relative;z-index:2}
+.offer-hero-copy{max-width:780px;padding:130px 0 90px}
+.offer-hero .hero-script{color:#ff6b2c}
+.offer-hero h1{max-width:760px;margin:.35rem 0 1.15rem}
+.offer-hero .lead{max-width:680px;color:rgba(255,255,255,.88)}
+.offer-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:1.6rem}
+.offer-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 13px;border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;background:rgba(255,255,255,.11);
+  backdrop-filter:blur(8px);font-size:.82rem;font-weight:700
+}
+
+.offer-intro{text-align:center;max-width:760px;margin:0 auto 46px}
+.offer-intro .eyebrow{justify-content:center}
+.offer-intro .script{margin:8px 0 4px}
+.offer-intro p{max-width:650px;margin:1rem auto 0;color:var(--ink-70)}
+
+.offer-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:22px;
+}
+.offer-card{
+  position:relative;overflow:hidden;
+  border:1px solid rgba(12,59,57,.10);
+  border-radius:28px;background:#fff;
+  box-shadow:0 18px 50px rgba(12,59,57,.09);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.offer-card:hover{transform:translateY(-7px);box-shadow:0 26px 60px rgba(12,59,57,.14)}
+.offer-card-media{height:235px;position:relative;overflow:hidden}
+.offer-card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.offer-card:hover .offer-card-media img{transform:scale(1.06)}
+.offer-tag{
+  position:absolute;top:16px;left:16px;
+  padding:7px 11px;border-radius:999px;background:#ff6b2c;color:#fff;
+  font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase
+}
+.offer-discount{
+  position:absolute;top:16px;right:16px;
+  padding:7px 11px;border-radius:999px;background:#fff;color:#0c3b39;
+  font-size:.76rem;font-weight:900
+}
+.offer-body{padding:24px 24px 26px}
+.offer-body h3{margin:0 0 8px}
+.offer-body p{margin:0;color:var(--ink-70);line-height:1.65}
+.offer-meta{display:flex;justify-content:space-between;gap:10px;margin:18px 0 20px;padding-top:15px;border-top:1px solid rgba(12,59,57,.09);font-size:.82rem;font-weight:700;color:#46605e}
+.offer-price strong{font-size:1.45rem;color:#0c3b39}
+.offer-price del{margin-left:5px;color:#8a9694;font-size:.78rem}
+.offer-card .btn{width:100%;justify-content:center}
+
+.deal-grid{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:stretch
+}
+.deal-feature{
+  min-height:480px;border-radius:30px;overflow:hidden;position:relative;
+  background:url('img/dest-santorini.webp') center/cover no-repeat;
+  display:flex;align-items:flex-end;
+}
+.deal-feature::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(6,48,48,.9))}
+.deal-feature-content{position:relative;z-index:2;padding:34px;color:#fff;max-width:620px}
+.deal-feature-content h3{font-size:clamp(2rem,4vw,3.3rem);margin:.3rem 0 .7rem;color:#fff}
+.deal-feature-content p{color:rgba(255,255,255,.86);max-width:560px}
+.deal-price{font-size:1rem;font-weight:800;margin:18px 0}
+.deal-price strong{font-size:2rem;color:#ffb25f}
+.mini-deals{display:grid;gap:16px}
+.mini-deal{
+  display:grid;grid-template-columns:120px 1fr;min-height:150px;
+  overflow:hidden;border-radius:22px;background:#fff;border:1px solid rgba(12,59,57,.09);
+  box-shadow:0 14px 35px rgba(12,59,57,.07)
+}
+.mini-deal img{width:100%;height:100%;object-fit:cover}
+.mini-deal-body{padding:18px}
+.mini-deal-body .eyebrow{font-size:.65rem}
+.mini-deal-body h4{margin:5px 0 7px;font-size:1.1rem}
+.mini-deal-body p{margin:0;color:var(--ink-70);font-size:.82rem;line-height:1.5}
+.mini-deal-body .price{margin-top:10px;font-weight:900;color:var(--teal)}
+
+.savings{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:35px
+}
+.saving-card{
+  padding:24px 20px;border-radius:20px;background:#fff;
+  border:1px solid rgba(12,59,57,.09);text-align:center
+}
+.saving-icon{
+  width:48px;height:48px;display:grid;place-items:center;margin:0 auto 13px;
+  border-radius:15px;background:#e8f3f0;color:var(--teal);font-weight:900;font-size:1.2rem
+}
+.saving-card h4{margin:0 0 6px}
+.saving-card p{margin:0;color:var(--ink-70);font-size:.82rem;line-height:1.5}
+
+.offer-steps{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:22px
+}
+.step-card{
+  padding:30px;border-radius:25px;background:var(--cream);
+  border:1px solid rgba(12,59,57,.08);position:relative
+}
+.step-number{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--teal);color:#fff;font-weight:900;margin-bottom:18px
+}
+.step-card h3{margin:0 0 8px}
+.step-card p{margin:0;color:var(--ink-70);line-height:1.65}
+
+.offer-note{
+  margin-top:22px;padding:14px 18px;border-radius:15px;
+  background:#fff4ed;border:1px solid rgba(255,107,44,.14);
+  color:#6d4b3f;font-size:.82rem;line-height:1.5
+}
+
+@media(max-width:900px){
+  .offer-hero-copy{padding:120px 0 75px}
+  .offer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .deal-grid{grid-template-columns:1fr}
+  .savings{grid-template-columns:repeat(2,1fr)}
+  .offer-steps{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .offer-hero{min-height:76vh}
+  .offer-hero-copy{padding:110px 0 60px}
+  .offer-hero h1{font-size:clamp(2.45rem,11vw,4rem)}
+  .offer-badges{gap:7px}
+  .offer-badge{font-size:.72rem;padding:8px 10px}
+  .offer-grid{grid-template-columns:1fr}
+  .offer-card-media{height:220px}
+  .deal-feature{min-height:430px}
+  .deal-feature-content{padding:24px}
+  .mini-deal{grid-template-columns:100px 1fr}
+  .savings{grid-template-columns:1fr}
+  .saving-card{padding:21px 18px}
+}
+</style>
+
+
+<style>
+/* ===== Offers hero — editorial layout matching the reference ===== */
+.offer-page-hero{
+  position:relative;
+  min-height:560px;
+  display:flex;
+  align-items:flex-start;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 86% 22%, rgba(244,185,66,.12), transparent 24%),
+    radial-gradient(circle at 5% 92%, rgba(12,111,107,.08), transparent 27%),
+    #fbf5eb;
+  color:#0c3b39;
+}
+
+.offer-page-hero .container{
+  position:relative;
+  z-index:2;
+  padding-top:198px;
+  padding-bottom:68px;
+}
+
+.offer-breadcrumb{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:34px;
+  font-size:1rem;
+  font-weight:700;
+}
+
+.offer-breadcrumb a{
+  color:#0c6f6b;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+
+.offer-breadcrumb a:hover{
+  color:#ff6b2c;
+}
+
+.offer-breadcrumb span:nth-child(2){
+  color:#ff6b2c;
+  font-size:1.35rem;
+  line-height:1;
+}
+
+.offer-breadcrumb span:last-child{
+  color:#81908d;
+}
+
+.offer-page-hero-copy{
+  max-width:1030px;
+}
+
+.offer-page-hero-copy .script{
+  color:#ff6b2c;
+  font-size:clamp(1.45rem,2vw,2rem);
+  line-height:1.2;
+  margin-bottom:10px;
+}
+
+.offer-page-hero-copy h1{
+  color:#0c3b39;
+  max-width:1000px;
+  margin:0 0 22px;
+  font-size:clamp(3.8rem,6.2vw,5.8rem);
+  line-height:.98;
+  letter-spacing:-.045em;
+}
+
+.offer-page-hero-copy .lead{
+  max-width:760px;
+  margin:0;
+  color:#416967;
+  font-size:clamp(1.05rem,1.5vw,1.28rem);
+  line-height:1.65;
+}
+
+@media(max-width:900px){
+  .offer-page-hero{
+    min-height:500px;
+  }
+
+  .offer-page-hero .container{
+    padding-top:160px;
+    padding-bottom:60px;
+  }
+
+  .offer-page-hero-copy h1{
+    font-size:clamp(3rem,8vw,4.8rem);
+  }
+}
+
+@media(max-width:600px){
+  .offer-page-hero{
+    min-height:470px;
+  }
+
+  .offer-page-hero .container{
+    padding-top:135px;
+    padding-bottom:52px;
+  }
+
+  .offer-breadcrumb{
+    margin-bottom:25px;
+    font-size:.9rem;
+    gap:10px;
+  }
+
+  .offer-page-hero-copy .script{
+    font-size:1.35rem;
+    margin-bottom:9px;
+  }
+
+  .offer-page-hero-copy h1{
+    font-size:clamp(2.65rem,12vw,4rem);
+    line-height:1;
+    letter-spacing:-.04em;
+    margin-bottom:18px;
+  }
+
+  .offer-page-hero-copy .lead{
+    font-size:.98rem;
+    line-height:1.6;
+  }
+}
+</style>
+
+</head>
+<body>
+  <div id="preloader">
+    <div class="preloader-logo">
+      <img src="svg/logo.svg" alt="Stackly logo">
+      <span>Stack<em>ly</em></span>
+    </div>
+    <div class="preloader-bar"><i></i></div>
+    <div class="preloader-tag">Finding your best deal…</div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="img/logo.webp" alt="Stackly">
+        <span>Stackly<small>Travel Booking Platform</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="offer.html" class="active">Offers</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-pill" type="button" aria-label="Language">
+          <svg><use href="svg/sprite.svg#i-globe"/></svg> EN
+        </button>
+        <span data-auth="guest" style="display:flex;gap:.6rem">
+          <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+        </span>
+        <span data-auth="user" style="display:none">
+          <a data-dash-link href="404.html" class="btn btn-dark btn-sm">
+            <svg><use href="svg/sprite.svg#i-dash"/></svg> Dashboard
+          </a>
+        </span>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+  <span class="hamburger-lines" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </span>
+</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ===== Mobile menu ===== -->
+  <div class="mobile-menu">
+    <button class="mobile-close" aria-label="Close menu"><svg><use href="svg/sprite.svg#i-close"/></svg></button>
+    <a class="mnav" href="index.html"><span>01</span>Home</a>
+    <a class="mnav" href="about.html"><span>02</span>About</a>
+    <a class="mnav" href="services.html"><span>03</span>Services</a>
+    <a class="mnav active" href="offer.html"><span>04</span>Offers</a>
+    <a class="mnav" href="blog.html"><span>05</span>Blog</a>
+    <a class="mnav" href="contact.html"><span>06</span>Contact</a>
+    <div class="mm-actions">
+      <a href="login.html" class="btn btn-white">Login</a>
+      <a href="register.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </div>
+
+
+
+<main>
+  <!-- ===== Offers Hero ===== -->
+  <section class="offer-page-hero">
+    <div class="container">
+      <div class="offer-breadcrumb" data-aos="fade-up">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Offers</span>
+      </div>
+
+      <div class="offer-page-hero-copy">
+        <div class="script" data-aos="fade-up" data-aos-delay="60">
+          Special offers & unforgettable escapes
+        </div>
+
+        <h1 class="h-display" data-splitting>
+          The best travel deals, all in one place
+        </h1>
+
+        <p class="lead" data-aos="fade-up" data-aos-delay="120">
+          Discover limited-time fares, hand-picked stays and holiday packages designed
+          to make your next adventure feel even better.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Featured Offers ===== -->
+  <section class="section" id="featured-offers">
+    <div class="container">
+      <div class="offer-intro" data-aos="fade-up">
+        <span class="eyebrow">Featured offers</span>
+        <div class="script">Your next escape starts here</div>
+        <h2 class="h-xxl" data-splitting>Deals worth packing for</h2>
+        <p>We hand-pick popular routes, stays and complete getaways so you can spend less time searching and more time travelling.</p>
+      </div>
+
+      <div class="offer-grid">
+        <article class="offer-card" data-aos="fade-up">
+          <div class="offer-card-media">
+            <img src="img/dest-bali.webp" alt="Bali tropical getaway">
+            <span class="offer-tag">Hot Deal</span>
+            <span class="offer-discount">30% OFF</span>
+          </div>
+          <div class="offer-body">
+            <h3>Bali Escape</h3>
+            <p>10 nights of beaches, temples and jungle stays with airport transfers included.</p>
+            <div class="offer-meta">
+              <span>10 days · 2 travellers</span>
+              <span class="offer-price"><strong>$749</strong> <del>$1,069</del></span>
+            </div>
+            <a href="404.html" class="btn btn-primary">View Deal <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+        </article>
+
+        <article class="offer-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="offer-card-media">
+            <img src="img/dest-santorini.webp" alt="Santorini island getaway">
+            <span class="offer-tag">Couples Pick</span>
+            <span class="offer-discount">25% OFF</span>
+          </div>
+          <div class="offer-body">
+            <h3>Santorini Signature</h3>
+            <p>Clifftop stays, sunset cruises and island-hopping moments designed for two.</p>
+            <div class="offer-meta">
+              <span>7 days · 2 travellers</span>
+              <span class="offer-price"><strong>$899</strong> <del>$1,199</del></span>
+            </div>
+            <a href="404.html" class="btn btn-primary">View Deal <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+        </article>
+
+        <article class="offer-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="offer-card-media">
+            <img src="img/dest-kyoto.webp" alt="Kyoto cultural trip">
+            <span class="offer-tag">Culture</span>
+            <span class="offer-discount">20% OFF</span>
+          </div>
+          <div class="offer-body">
+            <h3>Kyoto Discovery</h3>
+            <p>Traditional stays, guided food walks and the city's most beautiful historic districts.</p>
+            <div class="offer-meta">
+              <span>8 days · 2 travellers</span>
+              <span class="offer-price"><strong>$1,199</strong> <del>$1,499</del></span>
+            </div>
+            <a href="404.html" class="btn btn-primary">View Deal <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Spotlight Deals ===== -->
+  <section class="section tinted">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-aos="fade-up">Deal spotlight</span>
+          <div class="script" data-aos="fade-up" data-aos-delay="60">A little more for a little less</div>
+          <h2 class="h-xxl" data-splitting>Our standout escape this week</h2>
+        </div>
+        <a href="404.html" class="link-arrow" data-aos="fade-left">See all deals <svg><use href="svg/sprite.svg#i-star"/></svg></a>
+      </div>
+
+      <div class="deal-grid">
+        <article class="deal-feature" data-aos="fade-right">
+          <div class="deal-feature-content">
+            <span class="offer-tag">Editor's Pick</span>
+            <h3>Seven days under the Santorini sun</h3>
+            <p>Ocean-view accommodation, breakfast, airport transfers and a sunset sailing experience — all wrapped into one easy escape.</p>
+            <div class="deal-price">From <strong>$899</strong> per traveller · save up to $300</div>
+            <a href="404.html" class="btn btn-primary">Unlock This Deal <svg><use href="svg/sprite.svg#i-send"/></svg></a>
+          </div>
+        </article>
+
+        <div class="mini-deals">
+          <article class="mini-deal" data-aos="fade-left">
+            <img src="img/dest-swiss.webp" alt="Swiss Alps mountain holiday">
+            <div class="mini-deal-body">
+              <span class="eyebrow">Mountains</span>
+              <h4>Swiss Alps Weekend</h4>
+              <p>Rail pass + mountain stay + breakfast.</p>
+              <div class="price">From $1,050 · save 18%</div>
+            </div>
+          </article>
+          <article class="mini-deal" data-aos="fade-left" data-aos-delay="100">
+            <img src="img/dest-iceland.webp" alt="Iceland northern lights trip">
+            <div class="mini-deal-body">
+              <span class="eyebrow">Winter</span>
+              <h4>Iceland Aurora Hunt</h4>
+              <p>Five nights with a northern-lights guide.</p>
+              <div class="price">From $1,320 · save 22%</div>
+            </div>
+          </article>
+          <article class="mini-deal" data-aos="fade-left" data-aos-delay="200">
+            <img src="img/dest-bali.webp" alt="Bali island holiday">
+            <div class="mini-deal-body">
+              <span class="eyebrow">Island</span>
+              <h4>Bali Slow Escape</h4>
+              <p>Villa stay + transfers + local experience.</p>
+              <div class="price">From $749 · save 30%</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Savings ===== -->
+  <section class="section" id="member-deals">
+    <div class="container">
+      <div class="offer-intro" data-aos="fade-up">
+        <span class="eyebrow">Why Stackly offers</span>
+        <div class="script">More value in every booking</div>
+        <h2 class="h-xxl" data-splitting>Deals designed around you</h2>
+        <p>From flexible booking options to member-only savings, every offer is built to make planning simpler and the final price easier to love.</p>
+      </div>
+      <div class="savings">
+        <div class="saving-card" data-aos="fade-up">
+          <div class="saving-icon">%</div>
+          <h4>Member Prices</h4>
+          <p>Unlock private fares and stay discounts when you join Stackly.</p>
+        </div>
+        <div class="saving-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="saving-icon">↺</div>
+          <h4>Flexible Changes</h4>
+          <p>Eligible offers include free date changes so plans can stay flexible.</p>
+        </div>
+        <div class="saving-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="saving-icon">✓</div>
+          <h4>Clear Pricing</h4>
+          <p>What you see is what you pay, with transparent deal details.</p>
+        </div>
+        <div class="saving-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="saving-icon">★</div>
+          <h4>Curated Picks</h4>
+          <p>Our team filters the noise and highlights offers worth considering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== How It Works ===== -->
+  <section class="section tinted">
+    <div class="container">
+      <div class="offer-intro" data-aos="fade-up">
+        <span class="eyebrow">How it works</span>
+        <div class="script">Three simple moves</div>
+        <h2 class="h-xxl" data-splitting>Find it. Book it. Go.</h2>
+        <p>No complicated coupon hunting. Choose an offer, check the details and let Stackly handle the rest.</p>
+      </div>
+      <div class="offer-steps">
+        <div class="step-card" data-aos="fade-up">
+          <div class="step-number">01</div>
+          <h3>Choose your escape</h3>
+          <p>Browse flight, hotel and package deals curated around destinations people love right now.</p>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="step-number">02</div>
+          <h3>Claim the price</h3>
+          <p>Open the offer to review inclusions, dates and pricing before moving to a secure booking flow.</p>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="step-number">03</div>
+          <h3>Pack your bags</h3>
+          <p>Get your confirmation and travel with confidence, backed by Stackly's customer support.</p>
+        </div>
+      </div>
+      <div class="offer-note" data-aos="fade-up">
+        <strong>Offer note:</strong> Deal prices and availability can change based on travel dates, inventory and booking conditions. Always review the final inclusions before confirming.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section" style="padding-bottom:0">
+    <div class="container">
+      <div class="cta" data-aos="zoom-in">
+        <img class="cta-bg" src="img/cta-bg.webp" alt="" aria-hidden="true">
+        <span class="script" style="font-size:1.9rem">Your best deal could be next</span>
+        <h2 class="h-xxl">Ready to turn a deal into a journey?</h2>
+        <p>Join Stackly for free and get access to fresh offers, price alerts and travel ideas made for your next adventure.</p>
+        <a href="register.html" class="btn btn-primary">Join Stackly Free <svg><use href="svg/sprite.svg#i-send"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Newsletter ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="newsletter" data-aos="fade-up">
+        <div style="position:relative;z-index:1">
+          <h2 class="h-lg">Get new offers before everyone else</h2>
+          <p style="color:var(--ink-70)">One email a week. Fresh fares, member-only deals and travel inspiration.</p>
+        </div>
+        <form class="news-form" data-demo="You're on the list! We'll send the next offer drop soon." novalidate>
+          <input type="email" placeholder="you@example.com" aria-label="Email address">
+          <button class="btn btn-primary" type="submit">Subscribe <svg><use href="svg/sprite.svg#i-send"/></svg></button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-about">
+          <a href="index.html" class="brand">
+            <img src="img/logo.webp" alt="Stackly">
+            <span>Stackly<small>Travel Booking Platform</small></span>
+          </a>
+          <p>Flights, stays, packages and experiences — crafted into journeys you'll tell stories about. Your journey, our priority.</p>
+          <div class="socials">
+            <a href="404.html" aria-label="Facebook"><svg><use href="svg/sprite.svg#i-facebook"/></svg></a>
+            <a href="404.html" aria-label="Twitter / X"><svg><use href="svg/sprite.svg#i-twitter"/></svg></a>
+            <a href="404.html" aria-label="Instagram"><svg><use href="svg/sprite.svg#i-instagram"/></svg></a>
+            <a href="404.html" aria-label="LinkedIn"><svg><use href="svg/sprite.svg#i-linkedin"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="home.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Home</a></li>
+            <li><a href="about.html"><svg><use href="svg/sprite.svg#i-check"/></svg>About</a></li>
+            <li><a href="services.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Service</a></li>
+            <li><a href="offer.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Offer</a></li>
+            <li><a href="blog.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Blog</a></li>
+            <li><a href="contact.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>FAQ</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Pricing</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>My bookings</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Help center</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Cancellations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul class="footer-contact">
+            <li><svg><use href="svg/sprite.svg#i-pin"/></svg>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</li>
+            <li><svg><use href="svg/sprite.svg#i-phone"/></svg>+91 70107 92745</li>
+            <li><svg><use href="svg/sprite.svg#i-mail"/></svg>info@stackly.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Stackly Travel Co. All rights reserved.</span>
+        <span>Made for explorers · <a href="register.html">Join us</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><svg><use href="svg/sprite.svg#i-plus"/></svg></button>
+
+
+
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/main.js"></script>
+<script src="js/icon-fallback.js"></script>
+
+<script>
+(function () {
+  const form = document.querySelector('.news-form');
+  if (!form) return;
+  const input = form.querySelector('input[type="email"]');
+  if (!input) return;
+
+  const error = document.createElement('div');
+  error.className = 'js-error';
+  error.setAttribute('role', 'alert');
+  error.style.cssText = 'display:none;width:100%;margin-top:10px;padding:9px 12px;border-radius:10px;background:#fff0ed;color:#c63d24;border:1px solid rgba(198,61,36,.18);font-size:.82rem;line-height:1.35;font-weight:600;';
+  input.insertAdjacentElement('afterend', error);
+
+  function validate() {
+    const value = input.value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    if (!value) {
+      error.textContent = 'Please enter your email address.';
+      error.style.display = 'block';
+      return false;
+    }
+    if (!valid) {
+      error.textContent = 'Please enter a valid email address.';
+      error.style.display = 'block';
+      return false;
+    }
+    error.textContent = '';
+    error.style.display = 'none';
+    return true;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validate()) { input.focus(); return; }
+    let success = form.querySelector('.js-success');
+    if (!success) {
+      success = document.createElement('div');
+      success.className = 'js-success';
+      success.style.cssText = 'width:100%;margin-top:10px;padding:9px 12px;border-radius:10px;background:#edf8f3;color:#247a5a;border:1px solid rgba(36,122,90,.16);font-size:.82rem;line-height:1.35;font-weight:600;';
+      form.appendChild(success);
+    }
+    success.textContent = form.getAttribute('data-demo') || 'Subscribed successfully.';
+  });
+
+  input.addEventListener('input', function() {
+    if (error.style.display === 'block') validate();
+  });
+})();
+</script>
+
+<script>
+(function () {
+  document.querySelectorAll('a').forEach(function(link) {
+    const href = (link.getAttribute('href') || '').trim().toLowerCase();
+    if (!href || href === '#' || href === 'javascript:void(0)' || href === 'javascript:void(0);') {
+      link.setAttribute('href', '404.html');
+    }
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('.mobile-menu .mnav').forEach(function(link) {
+    const href = (link.getAttribute('href') || '').toLowerCase().split('#')[0] || 'index.html';
+    const active = href === currentPage;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+})();
+</script>
+
+</body>
+</html>

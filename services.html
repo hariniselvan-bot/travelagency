@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Stackly Travel Booking Platform</title>
+  <meta name="description" content="Flights, hotels, packages, experiences, insurance and 24/7 concierge — every travel service under one roof.">
+  <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+  <link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ===== Services: same Index header + mobile behavior ===== */
+@media (max-width: 768px) {
+  .site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+
+  .site-header .container {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-header .header-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .site-header .header-actions [data-auth="guest"] a[href="register.html"] {
+    display: none !important;
+  }
+
+  .site-header .header-actions [data-auth="guest"] {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .site-header .nav-toggle,
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: #ff6b2c !important;
+    color: #fff !important;
+    box-shadow: 0 5px 16px rgba(255,107,44,.28) !important;
+    outline: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    z-index: 10001 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines {
+    width: 22px !important;
+    height: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines i {
+    display: block !important;
+    width: 22px !important;
+    height: 2.5px !important;
+    min-height: 2.5px !important;
+    background: #fff !important;
+    border-radius: 99px !important;
+  }
+
+  .mobile-menu {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .mobile-menu .mobile-close {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-menu .mobile-close svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .mobile-menu .mnav.active {
+    color: #ff6b2c !important;
+    font-weight: 800 !important;
+  }
+
+  .mobile-menu .mnav.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    bottom: -3px !important;
+    width: 32px !important;
+    height: 3px !important;
+    border-radius: 99px !important;
+    background: #ff6b2c !important;
+  }
+}
+</style>
+
+
+<style>
+/* Services action icons — compass instead of arrows */
+.svc-card .link-arrow svg,
+.cta .btn svg {
+  transition: transform .25s ease;
+}
+
+.svc-card .link-arrow:hover svg,
+.cta .btn:hover svg {
+  transform: rotate(12deg) scale(1.08);
+}
+</style>
+
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="preloader-logo">
+      <img src="svg/logo.svg" alt="Stackly logo">
+      <span>Stack<em>ly</em></span>
+    </div>
+    <div class="preloader-bar"><i></i></div>
+    <div class="preloader-tag">Packing your bags…</div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="img/logo.webp" alt="Stackly">
+        <span>Stackly<small>Travel Booking Platform</small></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="offer.html">Offers</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="lang-pill" type="button" aria-label="Language">
+          <svg><use href="svg/sprite.svg#i-globe"/></svg> EN
+        </button>
+
+        <span data-auth="guest" style="display:flex;gap:.6rem">
+          <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+        </span>
+
+        <span data-auth="user" style="display:none">
+          <a data-dash-link href="404.html" class="btn btn-dark btn-sm">
+            <svg><use href="svg/sprite.svg#i-dash"/></svg> Dashboard
+          </a>
+        </span>
+
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+          <span class="hamburger-lines" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <button class="mobile-close" type="button" aria-label="Close menu">
+      <svg><use href="svg/sprite.svg#i-close"/></svg>
+    </button>
+
+    <a class="mnav" href="index.html"><span>01</span>Home</a>
+    <a class="mnav" href="about.html"><span>02</span>About</a>
+    <a class="mnav active" href="services.html"><span>03</span>Services</a>
+    <a class="mnav" href="offer.html"><span>04</span>Offers</a>
+    <a class="mnav" href="blog.html"><span>05</span>Blog</a>
+    <a class="mnav" href="contact.html"><span>06</span>Contact</a>
+
+    <div class="mm-actions">
+      <a href="login.html" class="btn btn-white">Login</a>
+      <a href="register.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </div>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <nav class="crumbs" data-aos="fade-down"><a href="index.html">Home</a><i>/</i><span>Services</span></nav>
+        <div class="script" style="font-size:1.7rem">Door to door, sorted</div>
+        <h1 data-splitting>Every service your trip needs</h1>
+        <p class="lead">One account, one dashboard, one support team — for everything from the first fare alert to the last airport transfer.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="svc-grid">
+          <div class="svc-card" data-aos="fade-up">
+            <span class="num">01</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-plane"/></svg></div>
+            <h3>Flight Booking</h3>
+            <p>Compare 900+ airlines with smart fare alerts, flexible-date calendars and a "buy / wait" predictor trained on 40M historical fares.</p>
+            <a class="link-arrow" href="contact.html">Enquire <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="80">
+            <span class="num">02</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-hotel"/></svg></div>
+            <h3>Hotels & Stays</h3>
+            <p>1.2M verified stays — riads, ryokans, treehouses and overwater villas — with free cancellation on most rates and loyalty stacking.</p>
+            <a class="link-arrow" href="contact.html">Enquire <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="160">
+            <span class="num">03</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-package"/></svg></div>
+            <h3>Holiday Packages</h3>
+            <p>Bundled flights, stays and transfers with hand-built itineraries. Save up to 30% versus booking each piece separately.</p>
+            <a class="link-arrow" href="contact.html">Enquire <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up">
+            <span class="num">04</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-compass"/></svg></div>
+            <h3>Experiences & Tours</h3>
+            <p>Skip-the-line tickets, licensed local guides, food walks, dives, treks and hidden-gem adventures — booked in two taps.</p>
+            <a class="link-arrow" href="contact.html">Enquire <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="80">
+            <span class="num">05</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-shield"/></svg></div>
+            <h3>Travel Insurance</h3>
+            <p>Trip protection covering delays, cancellations, lost luggage and medical emergencies — digital claims settled in ~72 hours.</p>
+            <a class="link-arrow" href="contact.html">Enquire <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="160">
+            <span class="num">06</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-headset"/></svg></div>
+            <h3>24/7 Concierge</h3>
+            <p>Real humans on chat, phone and email around the clock. Missed connection at 3am? We rebook you before you reach the desk.</p>
+            <a class="link-arrow" href="contact.html">Enquire <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section tinted">
+      <div class="container">
+        <div class="section-head" style="justify-content:center;text-align:center">
+          <div style="margin-inline:auto">
+            <span class="eyebrow" style="justify-content:center" data-aos="fade-up">How it works</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Three steps to takeoff</div>
+            <h2 class="h-xxl" data-splitting>Booking, minus the headache</h2>
+          </div>
+        </div>
+        <div class="svc-grid">
+          <div class="svc-card" data-aos="fade-up">
+            <span class="num">01</span>
+            <h3>Search & compare</h3>
+            <p>Tell us where and roughly when. We scan fares across partners and show the honest total — bags and seats included.</p>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="100">
+            <span class="num">02</span>
+            <h3>Book in minutes</h3>
+            <p>One checkout for flights, stays and extras. Pay how you like — cards, wallets or split payments for groups.</p>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="200">
+            <span class="num">03</span>
+            <h3>Travel with backup</h3>
+            <p>Live trip timeline in your dashboard, delay alerts pushed to your phone, and a concierge on call 24/7.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta" data-aos="zoom-in">
+          <img class="cta-bg" src="img/cta-bg.webp" alt="" aria-hidden="true">
+          <span class="script" style="font-size:1.9rem">Let's build your trip</span>
+          <h2 class="h-xxl">Tell us where — we'll handle the how</h2>
+          <p>Talk to a travel designer or start searching right away. No commitment, no fees to browse.</p>
+          <a href="contact.html" class="btn btn-primary">Talk to Us <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-about">
+          <a href="index.html" class="brand">
+            <img src="img/logo.webp" alt="Stackly">
+            <span>Stackly<small>Travel Booking Platform</small></span>
+          </a>
+          <p>Flights, stays, packages and experiences — crafted into journeys you'll tell stories about. Your journey, our priority.</p>
+
+          <div class="socials">
+            <a href="404.html" aria-label="Facebook"><svg><use href="svg/sprite.svg#i-facebook"/></svg></a>
+            <a href="404.html" aria-label="Twitter / X"><svg><use href="svg/sprite.svg#i-twitter"/></svg></a>
+            <a href="404.html" aria-label="Instagram"><svg><use href="svg/sprite.svg#i-instagram"/></svg></a>
+            <a href="404.html" aria-label="LinkedIn"><svg><use href="svg/sprite.svg#i-linkedin"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="index.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Home</a></li>
+            <li><a href="about.html"><svg><use href="svg/sprite.svg#i-check"/></svg>About</a></li>
+            <li><a href="services.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Service</a></li>
+            <li><a href="offer.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Offer</a></li>
+            <li><a href="blog.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Blog</a></li>
+            <li><a href="contact.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>FAQ</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Pricing</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>My bookings</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Help center</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Cancellations</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul class="footer-contact">
+            <li><svg><use href="svg/sprite.svg#i-pin"/></svg>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</li>
+            <li><svg><use href="svg/sprite.svg#i-phone"/></svg>+91 70107 92745</li>
+            <li><svg><use href="svg/sprite.svg#i-mail"/></svg>info@stackly.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Stackly Travel Co. All rights reserved.</span>
+        <span>Made for explorers · <a href="register.html">Join us</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><svg><use href="svg/sprite.svg#i-arrow"/></svg></button>
+
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/icon-fallback.js"></script>
+
+<script>
+(function () {
+  const currentPage =
+    (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+
+  document.querySelectorAll('.mobile-menu .mnav').forEach(function (link) {
+    const href = (link.getAttribute('href') || '').toLowerCase().split('#')[0] || 'index.html';
+    const active = href === currentPage;
+
+    link.classList.toggle('active', active);
+
+    if (active) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

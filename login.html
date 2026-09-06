@@ -1,0 +1,2108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — Stackly Travel</title>
+
+    <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #111111;
+            --white: #ffffff;
+            --gray: #777777;
+            --border: #e5e5e5;
+            --orange: #ff5a36;
+            --error: #d93025;
+            --success: #168447;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "DM Sans", sans-serif;
+            background: #fff;
+            color: #111;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .login-page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 48% 52%;
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           LEFT SIDE
+        ===================================================== */
+
+        .login-visual {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .visual-image {
+            position: absolute;
+            inset: 0;
+
+            background-image: url("img/blog-1.webp");
+            background-size: cover;
+            background-position: center;
+
+            animation: zoomImage 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes zoomImage {
+
+            from {
+                transform: scale(1.04);
+            }
+
+            to {
+                transform: scale(1.12);
+            }
+
+        }
+
+        .visual-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,.75),
+                    rgba(0,0,0,.18) 45%,
+                    rgba(0,0,0,.85)
+                );
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .visual-header {
+            position: relative;
+            z-index: 2;
+
+            padding: 32px 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 13px;
+
+            background: rgba(255,255,255,.1);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand-logo img {
+            width: 27px;
+            height: 27px;
+        }
+
+        .brand-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name strong {
+            font-family: "Bricolage Grotesque", sans-serif;
+            font-size: 22px;
+        }
+
+        .brand-name small {
+            margin-top: 3px;
+
+            color: rgba(255,255,255,.6);
+
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .back-website {
+            color: rgba(255,255,255,.8);
+
+            font-size: 11px;
+
+            text-decoration: none;
+
+            transition: .3s ease;
+        }
+
+        .back-website:hover {
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+
+        /* =====================================================
+           VISUAL CONTENT
+        ===================================================== */
+
+        .visual-content {
+            position: absolute;
+
+            z-index: 2;
+
+            left: 40px;
+            right: 40px;
+            bottom: 150px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: rgba(255,255,255,.75);
+
+            font-size: 9px;
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #fff;
+
+            box-shadow:
+                0 0 0 5px rgba(255,255,255,.12);
+        }
+
+        .visual-content h2 {
+            margin-top: 22px;
+
+            font-family: "Bricolage Grotesque", sans-serif;
+
+            font-size: clamp(48px, 5vw, 72px);
+
+            line-height: .95;
+
+            letter-spacing: -3px;
+        }
+
+        .visual-content h2 span {
+            color: #ffad98;
+        }
+
+        .visual-description {
+            max-width: 470px;
+
+            margin-top: 20px;
+
+            color: rgba(255,255,255,.7);
+
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+            display: flex;
+            gap: 40px;
+
+            margin-top: 32px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat strong {
+            font-family: "Bricolage Grotesque", sans-serif;
+            font-size: 22px;
+        }
+
+        .stat span {
+            margin-top: 5px;
+
+            color: rgba(255,255,255,.55);
+
+            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           QUOTE
+        ===================================================== */
+
+        .visual-bottom {
+            position: absolute;
+
+            z-index: 2;
+
+            left: 40px;
+            bottom: 35px;
+        }
+
+        .quote {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 14px 18px;
+
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(15px);
+        }
+
+        .quote-mark {
+            color: #ffad98;
+
+            font-family: Georgia, serif;
+
+            font-size: 38px;
+        }
+
+        .quote p {
+            font-family: "Bricolage Grotesque", sans-serif;
+
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+
+        /* =====================================================
+           RIGHT PANEL
+        ===================================================== */
+
+        .login-panel {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #fff;
+        }
+
+        .login-container {
+            width: min(470px, calc(100% - 80px));
+
+            padding: 45px 0;
+        }
+
+
+        /* =====================================================
+           HEADING
+        ===================================================== */
+
+        .welcome {
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            color: var(--orange);
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .login-heading h1 {
+            font-family: "Bricolage Grotesque", sans-serif;
+
+            font-size: 46px;
+
+            line-height: .98;
+
+            letter-spacing: -2px;
+        }
+
+        .login-heading h1 span {
+            color: var(--orange);
+        }
+
+        .login-heading p {
+            margin-top: 14px;
+            margin-bottom: 27px;
+
+            color: var(--gray);
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ROLE CARDS
+        ===================================================== */
+
+        .role-selector {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            margin-bottom: 22px;
+        }
+
+        .role-card {
+            position: relative;
+
+            min-height: 70px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 11px;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: #fff;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition: .25s ease;
+        }
+
+        .role-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,.06);
+        }
+
+        .role-card.active {
+            border-color: var(--orange);
+
+            background: #fff7f4;
+
+            box-shadow:
+                0 8px 25px rgba(255,90,54,.08);
+        }
+
+        .role-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background: #f1f1f1;
+
+            font-size: 17px;
+
+            transition: .25s ease;
+        }
+
+        .role-card.active .role-icon {
+            color: #fff;
+
+            background: var(--orange);
+        }
+
+        .role-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .role-info strong {
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .role-info small {
+            margin-top: 3px;
+
+            color: #999;
+
+            font-size: 8px;
+        }
+
+        .role-check {
+            position: absolute;
+
+            top: 8px;
+            right: 8px;
+
+            width: 17px;
+            height: 17px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: var(--orange);
+
+            color: #fff;
+
+            font-size: 9px;
+
+            opacity: 0;
+
+            transform: scale(.5);
+
+            transition: .25s ease;
+        }
+
+        .role-card.active .role-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .label-row {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .label-row a {
+            margin-bottom: 8px;
+
+            color: #888;
+
+            font-size: 9px;
+
+            text-decoration: none;
+        }
+
+        .label-row a:hover {
+            color: var(--orange);
+        }
+
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
+
+        .input-container {
+            position: relative;
+
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+
+            border: 1px solid #ddd;
+
+            border-radius: 11px;
+
+            background: #fff;
+
+            transition: .25s ease;
+        }
+
+        .input-container:focus-within {
+            border-color: var(--orange);
+
+            box-shadow:
+                0 0 0 4px rgba(255,90,54,.08);
+        }
+
+        .input-container.invalid {
+            border-color: var(--error);
+
+            background: #fffafa;
+        }
+
+        .input-container.valid {
+            border-color: var(--success);
+        }
+
+        .input-icon {
+            width: 48px;
+
+            display: grid;
+            place-items: center;
+
+            color: #999;
+
+            font-size: 15px;
+        }
+
+        .input-container input {
+            width: 100%;
+            height: 100%;
+
+            padding-right: 45px;
+
+            border: 0;
+            outline: 0;
+
+            background: transparent;
+
+            color: #222;
+
+            font-size: 12px;
+        }
+
+        .input-container input::placeholder {
+            color: #b5b5b5;
+        }
+
+
+        /* =====================================================
+           PASSWORD TOGGLE
+        ===================================================== */
+
+        .password-toggle {
+            position: absolute;
+
+            right: 12px;
+
+            width: 30px;
+            height: 30px;
+
+            border: 0;
+
+            background: transparent;
+
+            color: #999;
+
+            cursor: pointer;
+        }
+
+        .password-toggle:hover {
+            color: #222;
+        }
+
+
+        /* =====================================================
+           INLINE ERROR
+        ===================================================== */
+
+        .field-error {
+            display: block;
+
+            margin-top: 6px;
+
+            min-height: 13px;
+
+            color: var(--error);
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        .login-error {
+            display: none;
+
+            padding: 10px 12px;
+
+            margin-bottom: 13px;
+
+            border: 1px solid #f0d0cd;
+
+            border-radius: 9px;
+
+            background: #fff6f5;
+
+            color: var(--error);
+
+            font-size: 9px;
+        }
+
+        .login-error.show {
+            display: block;
+
+            animation: shake .3s ease;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            75% {
+                transform: translateX(4px);
+            }
+
+        }
+
+
+        /* =====================================================
+           REMEMBER
+        ===================================================== */
+
+        .form-options {
+            margin-bottom: 17px;
+        }
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #777;
+
+            font-size: 9px;
+
+            cursor: pointer;
+        }
+
+        .remember input {
+            position: absolute;
+
+            opacity: 0;
+        }
+
+        .checkbox {
+            width: 17px;
+            height: 17px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid #ddd;
+
+            border-radius: 5px;
+
+            color: transparent;
+
+            font-size: 9px;
+        }
+
+        .remember input:checked + .checkbox {
+            border-color: var(--orange);
+
+            background: var(--orange);
+
+            color: #fff;
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
+
+        .login-button {
+            position: relative;
+
+            width: 100%;
+            height: 54px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+
+            border-radius: 11px;
+
+            background: var(--black);
+
+            color: #fff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+        .login-button:hover {
+            background: var(--orange);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(255,90,54,.2);
+        }
+
+        .login-button.loading {
+            pointer-events: none;
+
+            opacity: .7;
+        }
+
+        .button-arrow {
+            position: absolute;
+
+            right: 18px;
+
+            font-size: 19px;
+
+            transition: .25s ease;
+        }
+
+        .login-button:hover .button-arrow {
+            transform: translateX(4px);
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin: 24px 0 16px;
+
+            color: #aaa;
+
+            font-size: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            height: 1px;
+
+            flex: 1;
+
+            background: #eee;
+        }
+
+
+        /* =====================================================
+           SOCIAL
+        ===================================================== */
+
+        .social-login {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .social-button {
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            border: 1px solid #e4e4e4;
+
+            border-radius: 10px;
+
+            background: #fff;
+
+            color: #333;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+        .social-button:hover {
+            background: #fafafa;
+
+            border-color: #ccc;
+
+            transform: translateY(-1px);
+        }
+
+        .google {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .twitter {
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           REGISTER
+        ===================================================== */
+
+        .register {
+            margin-top: 24px;
+
+            text-align: center;
+
+            color: #888;
+
+            font-size: 10px;
+        }
+
+        .register a {
+            color: #222;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+        .register a:hover {
+            color: var(--orange);
+        }
+
+
+        /* =====================================================
+           SECURITY
+        ===================================================== */
+
+        .secure {
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 15px;
+
+            color: #aaa;
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 760px) {
+
+            .login-page {
+                display: block;
+            }
+
+            .login-visual {
+                display: none;
+            }
+
+            .login-panel {
+                min-height: 100vh;
+
+                display: block;
+            }
+
+            .login-container {
+                width: calc(100% - 34px);
+
+                max-width: 500px;
+
+                margin: auto;
+
+                padding: 35px 0;
+            }
+
+            .mobile-brand {
+                display: flex;
+
+                align-items: center;
+
+                gap: 9px;
+
+                margin-bottom: 38px;
+
+                color: #111;
+
+                text-decoration: none;
+            }
+
+            .mobile-logo {
+                width: 40px;
+                height: 40px;
+
+                display: grid;
+
+                place-items: center;
+
+                border-radius: 11px;
+
+                background: #111;
+            }
+
+            .mobile-logo img {
+                width: 24px;
+                height: 24px;
+            }
+
+            .mobile-brand strong {
+                font-family: "Bricolage Grotesque", sans-serif;
+
+                font-size: 20px;
+            }
+
+            .mobile-brand small {
+                display: block;
+
+                color: #999;
+
+                font-size: 8px;
+
+                text-transform: uppercase;
+            }
+
+            .login-heading h1 {
+                font-size: 38px;
+            }
+
+            .role-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (min-width: 761px) {
+
+            .mobile-brand {
+                display: none;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .login-container {
+                width: calc(100% - 26px);
+            }
+
+            .login-heading h1 {
+                font-size: 34px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <main class="login-page">
+
+
+        <!-- =================================================
+             LEFT TRAVEL VISUAL
+        ================================================== -->
+
+        <section class="login-visual">
+
+            <div class="visual-image"></div>
+
+            <div class="visual-overlay"></div>
+
+
+            <header class="visual-header">
+
+                <a href="index.html" class="brand">
+
+                    <span class="brand-logo">
+
+                        <img
+                            src="svg/logo.svg"
+                            alt="Stackly"
+                        >
+
+                    </span>
+
+
+                    <span class="brand-name">
+
+                        <strong>
+                            Stackly
+                        </strong>
+
+                        <small>
+                            Travel made simple
+                        </small>
+
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="index.html"
+                    class="back-website"
+                >
+                    Back to website ↗
+                </a>
+
+            </header>
+
+
+            <div class="visual-content">
+
+                <span class="eyebrow">
+
+                    <span class="eyebrow-dot"></span>
+
+                    YOUR NEXT JOURNEY STARTS HERE
+
+                </span>
+
+
+                <h2>
+
+                    Travel farther.
+                    <br>
+
+                    <span>Live bigger.</span>
+
+                </h2>
+
+
+                <p class="visual-description">
+
+                    Discover unforgettable destinations,
+                    book amazing stays and keep every journey
+                    beautifully organized in one place.
+
+                </p>
+
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <strong>
+                            98K+
+                        </strong>
+
+                        <span>
+                            Happy travellers
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <strong>
+                            120+
+                        </strong>
+
+                        <span>
+                            Destinations
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <strong>
+                            4.9★
+                        </strong>
+
+                        <span>
+                            Average rating
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-bottom">
+
+                <div class="quote">
+
+                    <span class="quote-mark">
+                        “
+                    </span>
+
+                    <p>
+                        The world is waiting.
+                        <br>
+                        Don't just dream about it.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LOGIN PANEL
+        ================================================== -->
+
+        <section class="login-panel">
+
+            <div class="login-container">
+
+
+                <!-- Mobile logo -->
+
+                <a
+                    href="index.html"
+                    class="mobile-brand"
+                >
+
+                    <span class="mobile-logo">
+
+                        <img
+                            src="svg/logo.svg"
+                            alt="Stackly"
+                        >
+
+                    </span>
+
+
+                    <span>
+
+                        <strong>
+                            Stackly
+                        </strong>
+
+                        <small>
+                            Travel
+                        </small>
+
+                    </span>
+
+                </a>
+
+
+
+                <!-- Heading -->
+
+                <div class="login-heading">
+
+                    <span class="welcome">
+                        WELCOME BACK
+                    </span>
+
+
+                    <h1>
+
+                        Sign in to your
+                        <span>journey.</span>
+
+                    </h1>
+
+
+                    <p>
+                        Choose your account type and continue
+                        to your dashboard.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Role selector -->
+
+                <div class="role-selector">
+
+
+                    <button
+                        type="button"
+                        class="role-card active"
+                        data-role="user"
+                    >
+
+                        <span class="role-icon">
+                            ♙
+                        </span>
+
+
+                        <span class="role-info">
+
+                            <strong>
+                                Traveller
+                            </strong>
+
+                            <small>
+                                Manage your trips
+                            </small>
+
+                        </span>
+
+
+                        <span class="role-check">
+                            ✓
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        class="role-card"
+                        data-role="admin"
+                    >
+
+                        <span class="role-icon">
+                            ▦
+                        </span>
+
+
+                        <span class="role-info">
+
+                            <strong>
+                                Admin / Seller
+                            </strong>
+
+                            <small>
+                                Manage your business
+                            </small>
+
+                        </span>
+
+
+                        <span class="role-check">
+                            ✓
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Form -->
+
+                <form
+                    id="loginForm"
+                    novalidate
+                >
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+
+                        <div
+                            class="input-container"
+                            id="emailContainer"
+                        >
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                            >
+
+                        </div>
+
+
+                        <span
+                            class="field-error"
+                            id="emailError"
+                        ></span>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <div class="label-row">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+
+                            <!-- Goes to 404 -->
+
+                            <a href="404.html">
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <div
+                            class="input-container"
+                            id="passwordContainer"
+                        >
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+
+                        <span
+                            class="field-error"
+                            id="passwordError"
+                        ></span>
+
+                    </div>
+
+
+
+                    <!-- REMEMBER -->
+
+                    <div class="form-options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                checked
+                            >
+
+                            <span class="checkbox">
+                                ✓
+                            </span>
+
+                            Remember me
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- ERROR -->
+
+                    <div
+                        class="login-error"
+                        id="loginError"
+                    ></div>
+
+
+
+                    <!-- LOGIN -->
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton"
+                    >
+
+                        <span id="buttonText">
+                            Continue as Traveller
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- DIVIDER -->
+
+                <div class="divider">
+
+                    <span>
+                        or continue with
+                    </span>
+
+                </div>
+
+
+
+                <!-- SOCIAL BUTTONS -->
+
+                <div class="social-login">
+
+
+                    <!-- Goes to 404 -->
+
+                    <button
+                        type="button"
+                        class="social-button"
+                        onclick="window.location.href='404.html'"
+                    >
+
+                        <span class="google">
+                            G
+                        </span>
+
+                        Google
+
+                    </button>
+
+
+                    <!-- Goes to 404 -->
+
+                    <button
+                        type="button"
+                        class="social-button"
+                        onclick="window.location.href='404.html'"
+                    >
+
+                        <span class="twitter">
+                            𝕏
+                        </span>
+
+                        X / Twitter
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- REGISTER -->
+
+                <p class="register">
+
+                    New to Stackly?
+
+                    <a href="404.html">
+                        Create a free account →
+                    </a>
+
+                </p>
+
+
+
+                <div class="secure">
+
+                    🔒 Secure login · Your information is protected
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <script>
+
+        /* =====================================================
+           STACKLY LOGIN
+           
+           ANY VALID EMAIL IS ACCEPTED.
+           
+           PASSWORD CAN BE ANYTHING WITH 6+ CHARACTERS.
+           
+           USER  -> client-dashboard.html
+           ADMIN -> admin-dashboard.html
+        ===================================================== */
+
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+
+                const form =
+                    document.getElementById("loginForm");
+
+
+                const email =
+                    document.getElementById("email");
+
+
+                const password =
+                    document.getElementById("password");
+
+
+                const emailError =
+                    document.getElementById("emailError");
+
+
+                const passwordError =
+                    document.getElementById("passwordError");
+
+
+                const emailContainer =
+                    document.getElementById("emailContainer");
+
+
+                const passwordContainer =
+                    document.getElementById("passwordContainer");
+
+
+                const loginError =
+                    document.getElementById("loginError");
+
+
+                const passwordToggle =
+                    document.getElementById("passwordToggle");
+
+
+                const loginButton =
+                    document.getElementById("loginButton");
+
+
+                const buttonText =
+                    document.getElementById("buttonText");
+
+
+                const roles =
+                    document.querySelectorAll(".role-card");
+
+
+                let selectedRole = "user";
+
+
+
+                /* =================================================
+                   ROLE SWITCH
+                ================================================== */
+
+                roles.forEach(function (role) {
+
+                    role.addEventListener(
+                        "click",
+                        function () {
+
+
+                            roles.forEach(function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            });
+
+
+                            role.classList.add(
+                                "active"
+                            );
+
+
+                            selectedRole =
+                                role.dataset.role;
+
+
+                            clearErrors();
+
+
+                            if (
+                                selectedRole === "admin"
+                            ) {
+
+                                buttonText.textContent =
+                                    "Continue as Admin / Seller";
+
+                            } else {
+
+                                buttonText.textContent =
+                                    "Continue as Traveller";
+
+                            }
+
+                        }
+                    );
+
+                });
+
+
+
+                /* =================================================
+                   PASSWORD SHOW / HIDE
+                ================================================== */
+
+                passwordToggle.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            password.type === "password"
+                        ) {
+
+                            password.type = "text";
+
+                            passwordToggle.setAttribute(
+                                "aria-label",
+                                "Hide password"
+                            );
+
+                        } else {
+
+                            password.type = "password";
+
+                            passwordToggle.setAttribute(
+                                "aria-label",
+                                "Show password"
+                            );
+
+                        }
+
+                    }
+                );
+
+
+
+                /* =================================================
+                   EMAIL VALIDATION
+                ================================================== */
+
+                function validateEmail() {
+
+                    const value =
+                        email.value.trim();
+
+
+                    emailError.textContent = "";
+
+                    emailContainer.classList.remove(
+                        "invalid",
+                        "valid"
+                    );
+
+
+                    if (value === "") {
+
+                        emailError.textContent =
+                            "Please enter your email address.";
+
+                        emailContainer.classList.add(
+                            "invalid"
+                        );
+
+                        return false;
+
+                    }
+
+
+                    const emailPattern =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+                    if (
+                        !emailPattern.test(value)
+                    ) {
+
+                        emailError.textContent =
+                            "Please enter a valid email address.";
+
+                        emailContainer.classList.add(
+                            "invalid"
+                        );
+
+                        return false;
+
+                    }
+
+
+                    emailContainer.classList.add(
+                        "valid"
+                    );
+
+
+                    return true;
+
+                }
+
+
+
+                /* =================================================
+                   PASSWORD VALIDATION
+                ================================================== */
+
+                function validatePassword() {
+
+                    const value =
+                        password.value;
+
+
+                    passwordError.textContent = "";
+
+                    passwordContainer.classList.remove(
+                        "invalid",
+                        "valid"
+                    );
+
+
+                    if (value === "") {
+
+                        passwordError.textContent =
+                            "Please enter your password.";
+
+                        passwordContainer.classList.add(
+                            "invalid"
+                        );
+
+                        return false;
+
+                    }
+
+
+                    if (value.length < 6) {
+
+                        passwordError.textContent =
+                            "Password must contain at least 6 characters.";
+
+                        passwordContainer.classList.add(
+                            "invalid"
+                        );
+
+                        return false;
+
+                    }
+
+
+                    passwordContainer.classList.add(
+                        "valid"
+                    );
+
+
+                    return true;
+
+                }
+
+
+
+                /* =================================================
+                   CLEAR ERRORS
+                ================================================== */
+
+                function clearErrors() {
+
+                    emailError.textContent = "";
+
+                    passwordError.textContent = "";
+
+                    loginError.textContent = "";
+
+                    loginError.classList.remove(
+                        "show"
+                    );
+
+
+                    emailContainer.classList.remove(
+                        "invalid",
+                        "valid"
+                    );
+
+
+                    passwordContainer.classList.remove(
+                        "invalid",
+                        "valid"
+                    );
+
+                }
+
+
+
+                /* =================================================
+                   LIVE EMAIL VALIDATION
+                ================================================== */
+
+                email.addEventListener(
+                    "input",
+                    function () {
+
+                        if (
+                            email.value.trim() !== ""
+                        ) {
+
+                            validateEmail();
+
+                        }
+
+                        loginError.classList.remove(
+                            "show"
+                        );
+
+                    }
+                );
+
+
+                email.addEventListener(
+                    "blur",
+                    validateEmail
+                );
+
+
+
+                /* =================================================
+                   LIVE PASSWORD VALIDATION
+                ================================================== */
+
+                password.addEventListener(
+                    "input",
+                    function () {
+
+                        if (
+                            password.value !== ""
+                        ) {
+
+                            validatePassword();
+
+                        }
+
+                        loginError.classList.remove(
+                            "show"
+                        );
+
+                    }
+                );
+
+
+                password.addEventListener(
+                    "blur",
+                    validatePassword
+                );
+
+
+
+                /* =================================================
+                   SUBMIT
+                ================================================== */
+
+                form.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        event.preventDefault();
+
+
+                        clearErrors();
+
+
+                        const validEmail =
+                            validateEmail();
+
+
+                        const validPassword =
+                            validatePassword();
+
+
+                        /* -----------------------------------------
+                           STOP IF VALIDATION FAILS
+                        ----------------------------------------- */
+
+                        if (
+                            !validEmail ||
+                            !validPassword
+                        ) {
+
+                            return;
+
+                        }
+
+
+
+                        /* -----------------------------------------
+                           SAVE LOGIN INFORMATION
+                        ----------------------------------------- */
+
+                        const loginData = {
+
+                            email:
+                                email.value.trim(),
+
+                            role:
+                                selectedRole,
+
+                            loggedIn:
+                                true,
+
+                            loginTime:
+                                new Date().toISOString()
+
+                        };
+
+
+                        localStorage.setItem(
+                            "stacklyUser",
+                            JSON.stringify(loginData)
+                        );
+
+
+
+                        /* -----------------------------------------
+                           BUTTON LOADING
+                        ----------------------------------------- */
+
+                        loginButton.classList.add(
+                            "loading"
+                        );
+
+
+                        buttonText.textContent =
+                            "Signing you in...";
+
+
+
+                        /* -----------------------------------------
+                           DASHBOARD REDIRECT
+                        ----------------------------------------- */
+
+                        setTimeout(
+                            function () {
+
+
+                                if (
+                                    selectedRole === "admin"
+                                ) {
+
+                                    window.location.href =
+                                        "admin-dashboard.html";
+
+                                } else {
+
+                                    window.location.href =
+                                        "client-dashboard.html";
+
+                                }
+
+
+                            },
+                            600
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly — Travel Booking Platform | Your Journey, Our Priority</title>
+  <meta name="description" content="Stackly — discover flights, hotels, packages and unforgettable journeys. Best price guarantee, easy booking and 24/7 support.">
+  <link rel="icon" type="image/svg+xml" href="svg/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+  <link rel="stylesheet" href="css/style.css">
+
+<style>
+/* Hero side cards — contained in the right column, no image overlap */
+.hero-grid{
+  grid-template-columns:minmax(0,1fr) minmax(300px,420px);
+  align-items:center;
+}
+.hero-side-cards{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  width:min(100%,380px);
+  margin-left:auto;
+  position:relative;
+  z-index:2;
+}
+.hero-info-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:18px;
+  background:rgba(255,255,255,.13);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 14px 35px rgba(0,0,0,.16);
+  color:#fff;
+}
+.hero-card-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(244,185,66,.92);
+  color:#0C3B39;
+  font-size:20px;
+  font-weight:800;
+}
+.hero-info-card strong{
+  display:block;
+  font-size:.98rem;
+  line-height:1.2;
+}
+.hero-info-card small{
+  display:block;
+  margin-top:4px;
+  color:rgba(255,255,255,.78);
+  font-size:.78rem;
+}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-side-cards{
+    width:100%;
+    max-width:560px;
+    margin:10px auto 0;
+  }
+  .hero-info-card{padding:13px 15px;}
+}
+@media (max-width:520px){
+  .hero-side-cards{gap:9px;}
+  .hero-info-card{border-radius:14px;padding:11px 13px;}
+  .hero-card-icon{width:36px;height:36px;flex-basis:36px;font-size:17px;}
+}
+
+/* Hero readability fix: keep the Santorini image, but make all hero text clear */
+.hero .hero-copy,
+.hero .hero-copy h1,
+.hero .hero-copy p,
+.hero .hero-copy .hero-trust strong,
+.hero .hero-copy .hero-trust span {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,.28);
+}
+
+.hero .hero-copy .hero-script {
+  color: #ff6b2c !important;
+  text-shadow: 0 2px 5px rgba(0,0,0,.22);
+}
+
+.hero .hero-copy .hero-trust .ticon {
+  background: #ffffff !important;
+  color: #0c6f6b !important;
+}
+
+.hero .hero-copy .btn-ghost {
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,.9) !important;
+  background: rgba(12,59,57,.18) !important;
+}
+
+.hero .hero-copy .btn-ghost:hover {
+  color: #0c3b39 !important;
+  background: #ffffff !important;
+}
+
+/* Slightly stronger image overlay for readability */
+.hero {
+  background-image: linear-gradient(rgba(6,48,48,.62), rgba(6,48,48,.58)), url('img/dest-santorini.webp') !important;
+}
+
+
+/* About section overlap fix: keep the 15+ badge fully visible */
+.about-media {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.about-media .about-badge {
+  position: absolute !important;
+  z-index: 10 !important;
+}
+
+.about-media .main-img,
+.about-media .sub-img {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.about-media .sub-img {
+  z-index: 3 !important;
+}
+
+
+/* About section: move the secondary travel image to the right as an overlap */
+.about-media {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.about-media .sub-img {
+  position: absolute !important;
+  z-index: 4 !important;
+  right: -70px !important;
+  left: auto !important;
+  bottom: -45px !important;
+}
+
+
+/* ===== Testimonials — redesigned ===== */
+section.section.tinted:has(.testi-wrap) {
+  position: relative;
+  overflow: hidden;
+  padding: 110px 0 120px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(255,107,44,.10), transparent 28%),
+    radial-gradient(circle at 92% 82%, rgba(12,111,107,.10), transparent 30%),
+    #f7f3ec;
+}
+
+section.section.tinted:has(.testi-wrap) .section-head {
+  margin-bottom: 48px;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+section.section.tinted:has(.testi-wrap) .section-head > div {
+  margin-inline: 0 !important;
+  max-width: 760px;
+}
+
+section.section.tinted:has(.testi-wrap) .eyebrow {
+  justify-content: flex-start !important;
+  color: var(--teal);
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+section.section.tinted:has(.testi-wrap) .script {
+  color: var(--orange);
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  margin: 8px 0 4px;
+}
+
+section.section.tinted:has(.testi-wrap) .h-xxl {
+  margin: 0;
+  max-width: 700px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-wrap {
+  position: relative;
+  overflow: visible;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 8px 4px 24px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-track {
+  display: flex !important;
+  gap: 22px;
+  width: 100% !important;
+  transform: translate3d(0,0,0);
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-track.is-dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-slide {
+  flex: 0 0 calc((100% - 44px) / 3);
+  width: calc((100% - 44px) / 3) !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-card {
+  position: relative;
+  height: 100%;
+  min-height: 330px;
+  padding: 34px 30px 28px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(12,59,57,.10);
+  border-radius: 28px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 18px 50px rgba(12,59,57,.09);
+  transition: transform .35s ease, box-shadow .35s ease;
+  overflow: hidden;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--orange), var(--teal));
+}
+
+section.section.tinted:has(.testi-wrap) .testi-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 25px 60px rgba(12,59,57,.14);
+}
+
+section.section.tinted:has(.testi-wrap) .qic {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  background: #e8f3f0;
+  color: var(--teal);
+}
+
+section.section.tinted:has(.testi-wrap) .qic svg {
+  width: 25px;
+  height: 25px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #183f3d;
+  font-weight: 500;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-stars {
+  display: flex;
+  gap: 4px;
+  margin-top: 24px;
+  color: #f4b942;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-stars svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-who {
+  margin-top: auto;
+  padding-top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(12,59,57,.09);
+}
+
+section.section.tinted:has(.testi-wrap) .testi-ava {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-who strong {
+  display: block;
+  color: #0c3b39;
+  font-size: .94rem;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-who span {
+  display: block;
+  margin-top: 3px;
+  color: #70807e;
+  font-size: .78rem;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-nav {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(12,59,57,.16);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--teal);
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn:hover {
+  color: #fff;
+  background: var(--teal);
+  border-color: var(--teal);
+  transform: translateY(-2px);
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-btn.prev svg {
+  transform: rotate(180deg);
+}
+
+section.section.tinted:has(.testi-wrap) .testi-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(12,59,57,.22);
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-dots button.active {
+  width: 26px;
+  border-radius: 10px;
+  background: var(--orange);
+}
+
+@media (max-width: 900px) {
+  section.section.tinted:has(.testi-wrap) {
+    padding: 85px 0 95px;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-slide {
+    flex-basis: calc((100% - 22px) / 2);
+    width: calc((100% - 22px) / 2) !important;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-card {
+    min-height: 310px;
+  }
+}
+
+@media (max-width: 600px) {
+  section.section.tinted:has(.testi-wrap) {
+    padding: 70px 0 80px;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-slide {
+    flex-basis: 100%;
+    width: 100% !important;
+  }
+
+  section.section.tinted:has(.testi-wrap) .testi-card {
+    padding: 28px 22px 24px;
+    border-radius: 22px;
+  }
+}
+
+section.section.tinted:has(.testi-wrap) .testi-ava {
+  overflow: hidden;
+  position: relative;
+  background: #e8f3f0 !important;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-ava img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+</style>
+
+
+<style>
+section.section.tinted:has(.testi-wrap),
+section.section.tinted:has(.testi-wrap) .testi-wrap {
+  visibility: visible;
+}
+
+section.section.tinted:has(.testi-wrap) .testi-track {
+  opacity: 1;
+}
+/* Button icon refresh — no directional arrow icons */
+.btn svg, .link-arrow svg, .dgo svg, .testi-btn svg, #toTop svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+.link-arrow svg { transition: transform .25s ease; }
+.link-arrow:hover svg { transform: scale(1.12); }
+</style>
+
+
+<style>
+/* =========================================================
+   MOBILE HAMBURGER FIX
+   Prevent the menu button / SVG from becoming a giant circle
+   after the first click.
+   ========================================================= */
+@media (max-width: 768px) {
+
+  .site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+
+  .site-header .container {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-header .header-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  /* Hide Sign Up on mobile */
+  .site-header .header-actions [data-auth="guest"] a[href="register.html"] {
+    display: none !important;
+  }
+
+  /* Login stays normal */
+  .site-header .header-actions [data-auth="guest"] {
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* IMPORTANT: lock hamburger size */
+  .site-header .nav-toggle,
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    border: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+  }
+
+  .site-header .nav-toggle svg,
+  .site-header .nav-toggle svg use {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    display: block !important;
+    flex: 0 0 22px !important;
+    transform: none !important;
+  }
+
+  /* Mobile menu must remain a proper full-screen panel */
+  .mobile-menu {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    box-sizing: border-box !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .mobile-menu .mobile-close {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-menu .mobile-close svg {
+    width: 22px !important;
+    height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+  }
+
+  /* Active mobile page */
+  .mobile-menu .mnav.active {
+    color: #ff6b2c !important;
+    font-weight: 800 !important;
+  }
+
+  .mobile-menu .mnav.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    bottom: -3px !important;
+    width: 32px !important;
+    height: 3px !important;
+    border-radius: 99px !important;
+    background: #ff6b2c !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== Guaranteed-visible mobile hamburger ===== */
+@media (max-width: 768px) {
+  .site-header .nav-toggle {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: #ff6b2c !important;
+    color: #fff !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: 0 5px 16px rgba(255,107,44,.28) !important;
+
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex: 0 0 44px !important;
+    position: relative !important;
+    z-index: 10001 !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    transform: none !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines {
+    width: 22px !important;
+    height: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .site-header .nav-toggle .hamburger-lines i {
+    display: block !important;
+    width: 22px !important;
+    height: 2.5px !important;
+    min-height: 2.5px !important;
+    background: #fff !important;
+    border-radius: 99px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .site-header .nav-toggle:hover,
+  .site-header .nav-toggle:focus,
+  .site-header .nav-toggle:active {
+    background: #ff6b2c !important;
+    color: #fff !important;
+    transform: none !important;
+  }
+}
+</style>
+
+</head>
+<body>
+
+  <!-- ===== Preloader ===== -->
+  <div id="preloader">
+    <div class="preloader-logo">
+      <img src="svg/logo.svg" alt="Stackly logo">
+      <span>Stack<em>ly</em></span>
+    </div>
+    <div class="preloader-bar"><i></i></div>
+    <div class="preloader-tag">Packing your bags…</div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="img/logo.webp" alt="Stackly">
+        <span>Stackly<small>Travel Booking Platform</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="offer.html">Offers</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-pill" type="button" aria-label="Language">
+          <svg><use href="svg/sprite.svg#i-globe"/></svg> EN
+        </button>
+        <span data-auth="guest" style="display:flex;gap:.6rem">
+          <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+        </span>
+        <span data-auth="user" style="display:none">
+          <a data-dash-link href="404.html" class="btn btn-dark btn-sm">
+            <svg><use href="svg/sprite.svg#i-dash"/></svg> Dashboard
+          </a>
+        </span>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+  <span class="hamburger-lines" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </span>
+</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Mobile menu ===== -->
+  <div class="mobile-menu">
+    <button class="mobile-close" aria-label="Close menu"><svg><use href="svg/sprite.svg#i-close"/></svg></button>
+    <a class="mnav" href="index.html"><span>01</span>Home</a>
+    <a class="mnav" href="about.html"><span>02</span>About</a>
+    <a class="mnav" href="services.html"><span>03</span>Services</a>
+    <a class="mnav" href="index.html#pricing"><span>04</span>Offers</a>
+    <a class="mnav" href="blog.html"><span>05</span>Blog</a>
+    <a class="mnav" href="contact.html"><span>06</span>Contact</a>
+    <div class="mm-actions">
+      <a href="login.html" class="btn btn-white">Login</a>
+      <a href="register.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero" style="position:relative; background-image:linear-gradient(rgba(12,59,57,.52),rgba(12,59,57,.46)),url('img/dest-santorini.webp'); background-size:cover; background-position:center; background-repeat:no-repeat;">
+      <img class="plane-path" src="svg/plane-path.svg" alt="" aria-hidden="true">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-script" data-hero-fade>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M2 12h20"/><path d="M13 2l9 10-9 10"/><path d="M13 2v20"/>
+</svg> Explore the world
+          </span>
+          <h1 class="h-display" data-splitting>Your Journey, Our Priority</h1>
+          <p class="lead" data-hero-fade>
+            Discover flights, hotels, experiences and unforgettable journeys — all in one place.
+            Stackly compares 900+ airlines and 1.2M stays to craft trips that feel effortless.
+          </p>
+          <div class="hero-ctas" data-hero-fade>
+            <a href="#booking" class="btn btn-primary">Plan My Trip <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+            <a href="services.html" class="btn btn-ghost">Explore Services</a>
+          </div>
+          <div class="hero-trust" data-hero-fade>
+            <div class="trust-item">
+              <div class="ticon"><svg><use href="svg/sprite.svg#i-tag"/></svg></div>
+              <div><strong>Best Price Guarantee</strong><span>Get the best deals</span></div>
+            </div>
+            <div class="trust-item">
+              <div class="ticon"><svg><use href="svg/sprite.svg#i-check"/></svg></div>
+              <div><strong>Easy Booking Process</strong><span>Book in just a few clicks</span></div>
+            </div>
+            <div class="trust-item">
+              <div class="ticon"><svg><use href="svg/sprite.svg#i-headset"/></svg></div>
+              <div><strong>24/7 Customer Support</strong><span>We are here to help</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-side-cards" aria-label="Travel highlights">
+          <div class="hero-info-card">
+            <span class="hero-card-icon">✦</span>
+            <div>
+              <strong>120+ Destinations</strong>
+              <small>Explore the world with ease</small>
+            </div>
+          </div>
+          <div class="hero-info-card">
+            <span class="hero-card-icon">★</span>
+            <div>
+              <strong>4.9 / 5.0 Rating</strong>
+              <small>Loved by 120k+ travellers</small>
+            </div>
+          </div>
+          <div class="hero-info-card">
+            <span class="hero-card-icon">✓</span>
+            <div>
+              <strong>Easy & Secure Booking</strong>
+              <small>Plan your trip with confidence</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Booking widget ===== -->
+    <div class="booking-wrap" id="booking">
+      <div class="container">
+        <div class="booking" data-aos="fade-up">
+          <div class="booking-tabs" role="tablist">
+            <button class="booking-tab active" type="button"><svg><use href="svg/sprite.svg#i-plane"/></svg>Flights</button>
+            <button class="booking-tab" type="button"><svg><use href="svg/sprite.svg#i-hotel"/></svg>Hotels</button>
+            <button class="booking-tab" type="button"><svg><use href="svg/sprite.svg#i-package"/></svg>Packages</button>
+            <button class="booking-tab" type="button"><svg><use href="svg/sprite.svg#i-compass"/></svg>Experiences</button>
+          </div>
+          <form class="booking-form">
+            <div class="bfield">
+              <label><svg><use href="svg/sprite.svg#i-pin"/></svg>From</label>
+              <input id="bfFrom" type="text" value="New Delhi (DEL)" autocomplete="off">
+            </div>
+            <button class="bswap" type="button" aria-label="Swap origin and destination">
+              <svg><use href="svg/sprite.svg#i-swap"/></svg>
+            </button>
+            <div class="bfield">
+              <label><svg><use href="svg/sprite.svg#i-pin"/></svg>To</label>
+              <input id="bfTo" type="text" value="Mumbai (BOM)" autocomplete="off">
+            </div>
+            <div class="bfield">
+              <label><svg><use href="svg/sprite.svg#i-calendar"/></svg>Depart</label>
+              <input type="date" value="2026-05-20">
+            </div>
+            <div class="bfield">
+              <label><svg><use href="svg/sprite.svg#i-calendar"/></svg>Return</label>
+              <input type="date" value="2026-05-25">
+            </div>
+            <div class="bfield">
+              <label><svg><use href="svg/sprite.svg#i-users"/></svg>Travellers</label>
+              <select>
+                <option>2 Adults, 1 Child</option>
+                <option>1 Adult</option>
+                <option>2 Adults</option>
+                <option>2 Adults, 2 Children</option>
+                <option>Group (5+)</option>
+              </select>
+            </div>
+            <div class="bsearch">
+              <button class="btn btn-primary" type="submit">
+                <span id="bookingSubmitLabel">Search Flights</span>
+                <svg><use href="svg/sprite.svg#i-compass"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Marquee ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Santorini <i>✦</i> Bali <i>✦</i> Kyoto <i>✦</i> Swiss Alps <i>✦</i> Iceland <i>✦</i> Maldives <i>✦</i> Paris <i>✦</i> Patagonia <i>✦</i></span>
+        <span>Santorini <i>✦</i> Bali <i>✦</i> Kyoto <i>✦</i> Swiss Alps <i>✦</i> Iceland <i>✦</i> Maldives <i>✦</i> Paris <i>✦</i> Patagonia <i>✦</i></span>
+      </div>
+    </div>
+
+    <!-- ===== Stats ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card" data-aos="fade-up">
+            <div class="stat-num"><span data-count="120">0</span><sup>+</sup></div>
+            <p>Destinations worldwide</p>
+          </div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="stat-num"><span data-count="98">0</span><sup>K</sup></div>
+            <p>Happy travellers yearly</p>
+          </div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="160">
+            <div class="stat-num"><span data-count="900">0</span><sup>+</sup></div>
+            <p>Airline & hotel partners</p>
+          </div>
+          <div class="stat-card" data-aos="fade-up" data-aos-delay="240">
+            <div class="stat-num"><span data-count="15">0</span><sup>yrs</sup></div>
+            <p>Crafting journeys</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== About preview ===== -->
+    <section class="section tinted">
+      <div class="container about-grid">
+        <div class="about-media" data-aos="fade-right">
+          <div class="about-badge"><strong>15+</strong><span>Years of travel craft</span></div>
+          <div class="main-img"><img data-parallax="0.08" src="img/about-1.webp" alt="Rice terraces in Bali"></div>
+          <div class="sub-img" data-aos="zoom-in" data-aos-delay="200"><img src="img/about-2.webp" alt="Travellers planning a route on a map"></div>
+        </div>
+        <div>
+          <span class="eyebrow" data-aos="fade-up">About Stackly</span>
+          <div class="script" style="font-size:1.7rem" data-aos="fade-up" data-aos-delay="60">Wander often, wonder always</div>
+          <h2 class="h-xxl" data-splitting>We turn trips into stories worth telling</h2>
+          <p class="lead" data-aos="fade-up" data-aos-delay="120" style="margin-top:1.2rem">
+            Since 2011, Stackly has helped over a million explorers find their perfect route —
+            from spontaneous weekend escapes to once-in-a-lifetime expeditions. Real humans,
+            smart tech, zero booking stress.
+          </p>
+          <ul class="about-list" data-aos="fade-up" data-aos-delay="180">
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>Transparent pricing, no hidden fees</li>
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>Hand-picked stays & local guides</li>
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>Flexible dates & free rebooking</li>
+            <li><span class="chk"><svg><use href="svg/sprite.svg#i-check"/></svg></span>Carbon-aware travel options</li>
+          </ul>
+          <div class="about-sign" data-aos="fade-up" data-aos-delay="240">
+            <a href="about.html" class="btn btn-dark">Our Story <svg><use href="svg/sprite.svg#i-quote"/></svg></a>
+            <div>
+              <div class="sig">Aarav Mehta</div>
+              <div class="who"><span>Founder & Chief Explorer</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Destinations ===== -->
+    <section class="section" id="destinations">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-aos="fade-up">Top Destinations</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Where to next?</div>
+            <h2 class="h-xxl" data-splitting>Trending places this season</h2>
+          </div>
+          <a href="services.html" class="link-arrow" data-aos="fade-left">View all destinations <svg><use href="svg/sprite.svg#i-pin"/></svg></a>
+        </div>
+        <div class="dest-grid">
+          <a href="contact.html" class="dest-card dc-1" data-aos="fade-up">
+            <img src="img/dest-santorini.webp" alt="Santorini, Greece">
+            <div class="dtop"><span class="dtag">Island Escape</span><span class="dprice">from $899</span></div>
+            <div class="dbody">
+              <h3>Santorini, Greece</h3>
+              <div class="dmeta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>7 days</span>
+                <span><svg><use href="svg/sprite.svg#i-star"/></svg>4.9 (2.1k)</span>
+              </div>
+            </div>
+            <span class="dgo"><svg><use href="svg/sprite.svg#i-pin"/></svg></span>
+          </a>
+          <a href="contact.html" class="dest-card dc-2" data-aos="fade-up" data-aos-delay="100">
+            <img src="img/dest-bali.webp" alt="Bali, Indonesia">
+            <div class="dtop"><span class="dtag">Jungle & Temples</span><span class="dprice">from $749</span></div>
+            <div class="dbody">
+              <h3>Bali, Indonesia</h3>
+              <div class="dmeta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>10 days</span>
+                <span><svg><use href="svg/sprite.svg#i-star"/></svg>4.8 (3.4k)</span>
+              </div>
+            </div>
+            <span class="dgo"><svg><use href="svg/sprite.svg#i-pin"/></svg></span>
+          </a>
+          <a href="contact.html" class="dest-card dc-3" data-aos="fade-up" data-aos-delay="200">
+            <img src="img/dest-kyoto.webp" alt="Kyoto, Japan">
+            <div class="dtop"><span class="dtag">Culture Trip</span><span class="dprice">from $1,199</span></div>
+            <div class="dbody">
+              <h3>Kyoto, Japan</h3>
+              <div class="dmeta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>8 days</span>
+                <span><svg><use href="svg/sprite.svg#i-star"/></svg>4.9 (1.8k)</span>
+              </div>
+            </div>
+            <span class="dgo"><svg><use href="svg/sprite.svg#i-pin"/></svg></span>
+          </a>
+          <a href="contact.html" class="dest-card dc-4" data-aos="fade-up">
+            <img src="img/dest-swiss.webp" alt="Swiss Alps">
+            <div class="dtop"><span class="dtag">Mountains</span><span class="dprice">from $1,050</span></div>
+            <div class="dbody">
+              <h3>Swiss Alps</h3>
+              <div class="dmeta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>6 days</span>
+                <span><svg><use href="svg/sprite.svg#i-star"/></svg>4.9 (2.7k)</span>
+              </div>
+            </div>
+            <span class="dgo"><svg><use href="svg/sprite.svg#i-pin"/></svg></span>
+          </a>
+          <a href="contact.html" class="dest-card dc-5" data-aos="fade-up" data-aos-delay="100">
+            <img src="img/dest-iceland.webp" alt="Northern lights in Iceland">
+            <div class="dtop"><span class="dtag">Aurora Hunt</span><span class="dprice">from $1,320</span></div>
+            <div class="dbody">
+              <h3>Reykjavík, Iceland</h3>
+              <div class="dmeta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>5 days</span>
+                <span><svg><use href="svg/sprite.svg#i-star"/></svg>4.8 (1.5k)</span>
+              </div>
+            </div>
+            <span class="dgo"><svg><use href="svg/sprite.svg#i-pin"/></svg></span>
+          </a>
+          <a href="contact.html" class="dest-card dc-6" data-aos="fade-up" data-aos-delay="200" style="background:var(--teal-dark);display:flex;align-items:center;justify-content:center;text-align:center">
+            <div style="padding:2rem;color:var(--cream)">
+              <div class="script" style="font-size:1.6rem">120+ more</div>
+              <h3 style="color:#fff;margin:.4rem 0 1.2rem">Can't decide?<br>Let us surprise you.</h3>
+              <span class="btn btn-primary btn-sm">Mystery Trip <svg><use href="svg/sprite.svg#i-star"/></svg></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Services ===== -->
+    <section class="section tinted" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-aos="fade-up">What we do</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Everything under one roof</div>
+            <h2 class="h-xxl" data-splitting>Services built for explorers</h2>
+          </div>
+          <a href="services.html" class="link-arrow" data-aos="fade-left">All services <svg><use href="svg/sprite.svg#i-package"/></svg></a>
+        </div>
+        <div class="svc-grid">
+          <div class="svc-card" data-aos="fade-up">
+            <span class="num">01</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-plane"/></svg></div>
+            <h3>Flight Booking</h3>
+            <p>Compare 900+ airlines in seconds with smart fare alerts and flexible-date search that finds the cheapest day to fly.</p>
+            <a class="link-arrow" href="services.html">Learn more <svg><use href="svg/sprite.svg#i-plus"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="80">
+            <span class="num">02</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-hotel"/></svg></div>
+            <h3>Hotels & Stays</h3>
+            <p>From boutique riads to overwater villas — 1.2M verified stays with free cancellation on most rates.</p>
+            <a class="link-arrow" href="services.html">Learn more <svg><use href="svg/sprite.svg#i-plus"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="160">
+            <span class="num">03</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-package"/></svg></div>
+            <h3>Holiday Packages</h3>
+            <p>Bundled flights, stays and transfers with curated itineraries — save up to 30% versus booking separately.</p>
+            <a class="link-arrow" href="services.html">Learn more <svg><use href="svg/sprite.svg#i-plus"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up">
+            <span class="num">04</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-compass"/></svg></div>
+            <h3>Experiences & Tours</h3>
+            <p>Skip-the-line tickets, local guides and hidden-gem adventures booked in a couple of taps.</p>
+            <a class="link-arrow" href="services.html">Learn more <svg><use href="svg/sprite.svg#i-plus"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="80">
+            <span class="num">05</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-shield"/></svg></div>
+            <h3>Travel Insurance</h3>
+            <p>Trip protection that covers delays, cancellations and medical surprises — claims settled in days, not months.</p>
+            <a class="link-arrow" href="services.html">Learn more <svg><use href="svg/sprite.svg#i-plus"/></svg></a>
+          </div>
+          <div class="svc-card" data-aos="fade-up" data-aos-delay="160">
+            <span class="num">06</span>
+            <div class="svc-icon"><svg><use href="svg/sprite.svg#i-headset"/></svg></div>
+            <h3>24/7 Concierge</h3>
+            <p>Real humans on chat, phone and email around the clock — rebooking mid-trip has never been this calm.</p>
+            <a class="link-arrow" href="services.html">Learn more <svg><use href="svg/sprite.svg#i-plus"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Pricing / Offers ===== -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head" style="justify-content:center;text-align:center">
+          <div style="margin-inline:auto">
+            <span class="eyebrow" data-aos="fade-up" style="justify-content:center">Membership</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Travel more, pay less</div>
+            <h2 class="h-xxl" data-splitting>Pick your travel pass</h2>
+          </div>
+        </div>
+        <div class="pricing-grid">
+          <div class="price-card" data-aos="fade-up">
+            <div class="pname">Wanderer</div>
+            <div class="price-val">$0<small>/forever</small></div>
+            <p class="price-desc">For casual travellers who want great deals without commitment.</p>
+            <ul>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Flight & hotel search</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Price alerts for 3 routes</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Standard support</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Mobile app access</li>
+            </ul>
+            <a href="register.html" class="btn btn-ghost btn-block" style="justify-content:center">Start Free</a>
+          </div>
+          <div class="price-card featured" data-aos="fade-up" data-aos-delay="120">
+            <span class="price-badge">Most Popular</span>
+            <div class="pname">Explorer</div>
+            <div class="price-val">$12<small>/month</small></div>
+            <p class="price-desc">For frequent flyers who want perks, priority and deeper discounts.</p>
+            <ul>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Everything in Wanderer</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Member-only fares −15%</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Unlimited price alerts</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Free date changes</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Priority 24/7 support</li>
+            </ul>
+            <a href="register.html" class="btn btn-primary btn-block" style="justify-content:center">Go Explorer</a>
+          </div>
+          <div class="price-card" data-aos="fade-up" data-aos-delay="240">
+            <div class="pname">Nomad Pro</div>
+            <div class="price-val">$29<small>/month</small></div>
+            <p class="price-desc">For full-time travellers, creators and remote teams on the move.</p>
+            <ul>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Everything in Explorer</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Lounge passes ×4 / year</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Dedicated travel designer</li>
+              <li><svg><use href="svg/sprite.svg#i-check"/></svg>Group & team bookings</li>
+            </ul>
+            <a href="register.html" class="btn btn-dark btn-block" style="justify-content:center">Go Nomad Pro</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Testimonials ===== -->
+    <section class="section tinted">
+      <div class="container">
+        <div class="section-head" style="justify-content:center;text-align:center">
+          <div style="margin-inline:auto">
+            <span class="eyebrow" data-aos="fade-up" style="justify-content:center">Testimonials</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Words from the road</div>
+            <h2 class="h-xxl" data-splitting>Loved by 98k travellers</h2>
+          </div>
+        </div>
+        <div class="testi-wrap" data-aos="fade-up">
+          <div class="testi-track">
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="qic"><svg><use href="svg/sprite.svg#i-quote"/></svg></div>
+                <p class="testi-text">"Stackly found us a Santorini honeymoon $400 cheaper than anywhere else — and rebooked our ferry at midnight when the strike hit. Absolute lifesavers."</p>
+                <div class="testi-stars">
+                  <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
+                </div>
+                <div class="testi-who">
+                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=47" alt="Priya & Rohan Sharma"></div>
+                  <div style="text-align:left"><strong>Priya & Rohan Sharma</strong><span>Honeymooned in Greece</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="qic"><svg><use href="svg/sprite.svg#i-quote"/></svg></div>
+                <p class="testi-text">"I travel for work 15 times a year. The Explorer pass pays for itself every single month — the fare alerts alone are worth it."</p>
+                <div class="testi-stars">
+                  <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
+                </div>
+                <div class="testi-who">
+                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=12" alt="Marcus Chen"></div>
+                  <div style="text-align:left"><strong>Marcus Chen</strong><span>Consultant, Singapore</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="qic"><svg><use href="svg/sprite.svg#i-quote"/></svg></div>
+                <p class="testi-text">"Booked a Northern Lights chase in Iceland with zero planning. The local guide they paired us with knew exactly where the sky would open. Magical."</p>
+                <div class="testi-stars">
+                  <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
+                </div>
+                <div class="testi-who">
+                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=32" alt="Elena Rodriguez"></div>
+                  <div style="text-align:left"><strong>Elena Rodriguez</strong><span>Photographer, Madrid</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="qic"><svg><use href="svg/sprite.svg#i-quote"/></svg></div>
+                <p class="testi-text">"The hotel recommendations were spot on. We got an amazing sea-view stay in Bali without going over our budget. Stackly made the whole trip effortless."</p>
+                <div class="testi-stars">
+                  <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
+                </div>
+                <div class="testi-who">
+                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=44" alt="Ananya Nair"></div>
+                  <div style="text-align:left"><strong>Ananya Nair</strong><span>Designer, Bengaluru</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="qic"><svg><use href="svg/sprite.svg#i-quote"/></svg></div>
+                <p class="testi-text">"From flights to airport transfers, everything was organized beautifully. I especially loved how quickly I could compare options and book the best deal."</p>
+                <div class="testi-stars">
+                  <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
+                </div>
+                <div class="testi-who">
+                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=11" alt="Daniel Kim"></div>
+                  <div style="text-align:left"><strong>Daniel Kim</strong><span>Product Manager, Seoul</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="qic"><svg><use href="svg/sprite.svg#i-quote"/></svg></div>
+                <p class="testi-text">"Our family trip to Switzerland was planned in minutes. Great prices, beautiful stays and zero booking stress. We will definitely use Stackly again."</p>
+                <div class="testi-stars">
+                  <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
+                </div>
+                <div class="testi-who">
+                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=49" alt="Sofia Martin"></div>
+                  <div style="text-align:left"><strong>Sofia Martin</strong><span>Travel Blogger, Paris</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-nav">
+            <button class="testi-btn prev" aria-label="Previous testimonial"><svg><use href="svg/sprite.svg#i-quote"/></svg></button>
+            <div class="testi-dots"></div>
+            <button class="testi-btn next" aria-label="Next testimonial"><svg><use href="svg/sprite.svg#i-star"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Blog preview ===== -->
+    <section class="section" id="blog">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow" data-aos="fade-up">Travel Journal</span>
+            <div class="script" data-aos="fade-up" data-aos-delay="60">Stories & tips</div>
+            <h2 class="h-xxl" data-splitting>Fresh from the journal</h2>
+          </div>
+          <a href="blog.html" class="link-arrow" data-aos="fade-left">Read the journal <svg><use href="svg/sprite.svg#i-compass"/></svg></a>
+        </div>
+        <div class="blog-grid">
+          <article class="blog-card" data-aos="fade-up">
+            <div class="blog-thumb">
+              <img src="img/blog-1.webp" alt="View from an airplane window above clouds">
+              <span class="blog-cat">Flight Hacks</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-meta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Aug 28, 2026</span>
+                <span><svg><use href="svg/sprite.svg#i-clock"/></svg>6 min read</span>
+              </div>
+              <h3><a href="blog.html">The Tuesday trick: when to actually book the cheapest flights</a></h3>
+              <p>Fare data from 40M searches reveals the real booking windows — and the myths you can ignore.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-clock"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-thumb">
+              <img src="img/blog-2.webp" alt="Northern lights over Kirkjufell, Iceland">
+              <span class="blog-cat">Destinations</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-meta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Aug 21, 2026</span>
+                <span><svg><use href="svg/sprite.svg#i-clock"/></svg>9 min read</span>
+              </div>
+              <h3><a href="blog.html">Chasing the aurora: a first-timer's field guide to Iceland</a></h3>
+              <p>Where to stand, when to go, and why the forecast apps only tell half the story.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-clock"/></svg></a>
+            </div>
+          </article>
+          <article class="blog-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-thumb">
+              <img src="img/blog-3.webp" alt="Open suitcase packed for a trip">
+              <span class="blog-cat">Packing</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-meta">
+                <span><svg><use href="svg/sprite.svg#i-calendar"/></svg>Aug 14, 2026</span>
+                <span><svg><use href="svg/sprite.svg#i-clock"/></svg>5 min read</span>
+              </div>
+              <h3><a href="blog.html">Carry-on only: the 7 kg packing system that changed how we travel</a></h3>
+              <p>One bag, three weeks, zero checked-luggage queues. Here's the exact kit list.</p>
+              <a href="blog.html" class="link-arrow">Read more <svg><use href="svg/sprite.svg#i-clock"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section tinted" id="faq">
+      <div class="container faq-grid">
+        <div class="faq-side">
+          <span class="eyebrow" data-aos="fade-up">FAQ</span>
+          <div class="script" data-aos="fade-up" data-aos-delay="60">Good questions</div>
+          <h2 class="h-xxl" data-splitting>Everything travellers ask us</h2>
+          <div class="help-card" data-aos="fade-up">
+            <div class="hic"><svg><use href="svg/sprite.svg#i-headset"/></svg></div>
+            <div>
+              <strong>Still stuck? Talk to a human.</strong>
+              <span>Round-the-clock travel experts at <a href="contact.html">hello@stackly.travel</a></span>
+            </div>
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <div class="faq-item">
+            <button class="faq-q">How does the Best Price Guarantee work?
+              <span class="faq-icon"><svg><use href="svg/sprite.svg#i-plus"/></svg></span>
+            </button>
+            <div class="faq-a">
+              <p>Find the same flight or stay cheaper within 24 hours of booking and we'll refund double the difference. Just send us a screenshot — claims are verified and paid within 5 working days.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Can I cancel or change my booking for free?
+              <span class="faq-icon"><svg><use href="svg/sprite.svg#i-plus"/></svg></span>
+            </button>
+            <div class="faq-a">
+              <p>Most rates include free cancellation up to 48 hours before travel. Explorer and Nomad Pro members get unlimited free date changes on eligible bookings, managed in one tap from your dashboard.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Do you offer travel insurance?
+              <span class="faq-icon"><svg><use href="svg/sprite.svg#i-plus"/></svg></span>
+            </button>
+            <div class="faq-a">
+              <p>Yes — you can add trip protection at checkout covering delays, cancellations, lost luggage and medical emergencies. Claims are settled digitally, typically within 72 hours.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">What's the difference between User and Seller accounts?
+              <span class="faq-icon"><svg><use href="svg/sprite.svg#i-plus"/></svg></span>
+            </button>
+            <div class="faq-a">
+              <p>User accounts book and manage personal trips. Seller (admin) accounts list properties, packages and experiences on Stackly, with tools for pricing, availability and payout tracking in the seller dashboard.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How do price alerts work?
+              <span class="faq-icon"><svg><use href="svg/sprite.svg#i-plus"/></svg></span>
+            </button>
+            <div class="faq-a">
+              <p>Pick a route and your dates — we monitor fares every 15 minutes and email or push you the moment prices drop. Explorer members get unlimited alerts plus a predicted "buy / wait" signal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA banner ===== -->
+    <section class="section" style="padding-bottom:0">
+      <div class="container">
+        <div class="cta" data-aos="zoom-in">
+          <img class="cta-bg" src="img/cta-bg.webp" alt="" aria-hidden="true">
+          <span class="script" style="font-size:1.9rem">Adventure is out there</span>
+          <h2 class="h-xxl">Ready to write your next chapter?</h2>
+          <p>Join 98,000+ travellers who plan smarter with Stackly. Your first price alert takes 30 seconds to set up.</p>
+          <a href="register.html" class="btn btn-primary">Create Free Account <svg><use href="svg/sprite.svg#i-send"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Newsletter ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="newsletter" data-aos="fade-up">
+          <div style="position:relative;z-index:1">
+            <h2 class="h-lg">Get secret deals in your inbox</h2>
+            <p style="color:var(--ink-70)">One email a week. Member-only fares, mistake fares and zero spam.</p>
+          </div>
+          <form class="news-form" data-demo="You're on the list! First deal drops this Friday." novalidate>
+            <input type="email" placeholder="you@example.com" aria-label="Email address">
+            <button class="btn btn-primary" type="submit">Subscribe <svg><use href="svg/sprite.svg#i-send"/></svg></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-about">
+          <a href="index.html" class="brand">
+            <img src="img/logo.webp" alt="Stackly">
+            <span>Stackly<small>Travel Booking Platform</small></span>
+          </a>
+          <p>Flights, stays, packages and experiences — crafted into journeys you'll tell stories about. Your journey, our priority.</p>
+          <div class="socials">
+            <a href="404.html" aria-label="Facebook"><svg><use href="svg/sprite.svg#i-facebook"/></svg></a>
+            <a href="404.html" aria-label="Twitter / X"><svg><use href="svg/sprite.svg#i-twitter"/></svg></a>
+            <a href="404.html" aria-label="Instagram"><svg><use href="svg/sprite.svg#i-instagram"/></svg></a>
+            <a href="404.html" aria-label="LinkedIn"><svg><use href="svg/sprite.svg#i-linkedin"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="home.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Home</a></li>
+            <li><a href="about.html"><svg><use href="svg/sprite.svg#i-check"/></svg>About</a></li>
+            <li><a href="services.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Service</a></li>
+            <li><a href="offer.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Offer</a></li>
+            <li><a href="blog.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Blog</a></li>
+            <li><a href="contact.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>FAQ</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Pricing</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>My bookings</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Help center</a></li>
+            <li><a href="404.html"><svg><use href="svg/sprite.svg#i-check"/></svg>Cancellations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul class="footer-contact">
+            <li><svg><use href="svg/sprite.svg#i-pin"/></svg>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</li>
+            <li><svg><use href="svg/sprite.svg#i-phone"/></svg>+91 70107 92745</li>
+            <li><svg><use href="svg/sprite.svg#i-mail"/></svg>info@stackly.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Stackly Travel Co. All rights reserved.</span>
+        <span>Made for explorers · <a href="register.html">Join us</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><svg><use href="svg/sprite.svg#i-plus"/></svg></button>
+
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/icon-fallback.js"></script>
+
+<script>
+(function () {
+  const wrap = document.querySelector('.testi-wrap');
+  if (!wrap) return;
+
+  const track = wrap.querySelector('.testi-track');
+  const slides = Array.from(track.querySelectorAll('.testi-slide'));
+  const prev = wrap.querySelector('.testi-btn.prev');
+  const next = wrap.querySelector('.testi-btn.next');
+  const dots = wrap.querySelector('.testi-dots');
+
+  let index = 0;
+  let startX = 0;
+  let currentX = 0;
+  let dragging = false;
+
+  function visibleCount() {
+    if (window.innerWidth <= 600) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+
+  function maxIndex() {
+    return Math.max(0, slides.length - visibleCount());
+  }
+
+  function moveTo(newIndex, animate = true) {
+    index = Math.max(0, Math.min(newIndex, maxIndex()));
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    track.style.transition = animate
+      ? 'transform .55s cubic-bezier(.22,.61,.36,1)'
+      : 'none';
+    track.style.transform = 'translate3d(' + (-(slideWidth + gap) * index) + 'px,0,0)';
+    updateDots();
+  }
+
+  function updateDots() {
+    if (!dots) return;
+    dots.innerHTML = '';
+    for (let i = 0; i <= maxIndex(); i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+      if (i === index) dot.classList.add('active');
+      dot.addEventListener('click', () => moveTo(i));
+      dots.appendChild(dot);
+    }
+  }
+
+  prev && prev.addEventListener('click', () => moveTo(index - 1));
+  next && next.addEventListener('click', () => moveTo(index + 1));
+
+  track.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    currentX = e.clientX;
+    track.classList.add('is-dragging');
+    track.setPointerCapture(e.pointerId);
+  });
+
+  track.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    currentX = e.clientX;
+    const diff = currentX - startX;
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    const base = -(slideWidth + gap) * index;
+    track.style.transform = 'translate3d(' + (base + diff) + 'px,0,0)';
+  });
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    track.classList.remove('is-dragging');
+    const diff = currentX - startX;
+    if (Math.abs(diff) > 60) {
+      moveTo(index + (diff < 0 ? 1 : -1));
+    } else {
+      moveTo(index);
+    }
+  }
+
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+
+  window.addEventListener('resize', () => {
+    index = Math.min(index, maxIndex());
+    moveTo(index, false);
+  });
+
+  moveTo(0, false);
+})();
+</script>
+
+
+<style>
+/* FAQ: closed by default; answers open only after the user clicks */
+#faq .faq-a {
+  max-height: 0 !important;
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+
+#faq .faq-item.is-open .faq-a {
+  max-height: 240px !important;
+}
+
+#faq .faq-item.is-open .faq-icon {
+  transform: rotate(45deg);
+}
+</style>
+
+<script>
+(function () {
+  function setupFAQ() {
+    const faq = document.querySelector('#faq');
+    if (!faq) return;
+
+    const items = Array.from(faq.querySelectorAll('.faq-item'));
+
+    // Always start with every answer closed after a reload.
+    items.forEach(function (item) {
+      item.classList.remove('open', 'is-open');
+      const answer = item.querySelector('.faq-a');
+      if (answer) answer.style.maxHeight = '0px';
+    });
+
+    // Capture the click before the existing FAQ handler so only this
+    // controller manages open/close state.
+    items.forEach(function (item) {
+      const question = item.querySelector('.faq-q');
+      if (!question) return;
+
+      question.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const wasOpen = item.classList.contains('is-open');
+
+        items.forEach(function (other) {
+          other.classList.remove('open', 'is-open');
+          const answer = other.querySelector('.faq-a');
+          if (answer) answer.style.maxHeight = '0px';
+        });
+
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          const answer = item.querySelector('.faq-a');
+          if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      }, true);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupFAQ);
+  } else {
+    setupFAQ();
+  }
+})();
+</script>
+
+
+<style>
+/* ===== Custom JavaScript validation — no browser validation popup ===== */
+.news-form {
+  position: relative;
+}
+
+.news-form .js-error {
+  display: none;
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #fff0ed;
+  color: #c63d24;
+  border: 1px solid rgba(198,61,36,.18);
+  font-size: .82rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.news-form .js-error.show {
+  display: block;
+}
+
+.news-form input.js-invalid {
+  border-color: #ff5b35 !important;
+  box-shadow: 0 0 0 3px rgba(255,91,53,.12);
+}
+
+.news-form input.js-valid {
+  border-color: #2f9e78 !important;
+  box-shadow: 0 0 0 3px rgba(47,158,120,.10);
+}
+</style>
+
+<script>
+(function () {
+  const form = document.querySelector('.news-form');
+  if (!form) return;
+
+  const input = form.querySelector('input[type="email"]');
+  if (!input) return;
+
+  const error = document.createElement('div');
+  error.className = 'js-error';
+  error.setAttribute('role', 'alert');
+  input.insertAdjacentElement('afterend', error);
+
+  function showError(message) {
+    error.textContent = message;
+    error.classList.add('show');
+    input.classList.add('js-invalid');
+    input.classList.remove('js-valid');
+  }
+
+  function clearError() {
+    error.textContent = '';
+    error.classList.remove('show');
+    input.classList.remove('js-invalid');
+  }
+
+  function validateEmail() {
+    const value = input.value.trim();
+
+    if (!value) {
+      showError('Please enter your email address.');
+      return false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    if (!emailPattern.test(value)) {
+      showError('Please enter a valid email address.');
+      return false;
+    }
+
+    clearError();
+    input.classList.add('js-valid');
+    return true;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    if (!validateEmail()) {
+      input.focus();
+      return;
+    }
+
+    // Successful JS validation.
+    const message = form.getAttribute('data-demo');
+    if (message) {
+      showSuccess(message);
+    }
+  });
+
+  input.addEventListener('input', function () {
+    if (error.classList.contains('show')) {
+      validateEmail();
+    } else {
+      input.classList.remove('js-valid');
+    }
+  });
+
+  function showSuccess(message) {
+    clearError();
+    input.classList.add('js-valid');
+
+    let success = form.querySelector('.js-success');
+    if (!success) {
+      success = document.createElement('div');
+      success.className = 'js-success';
+      success.style.cssText =
+        'width:100%;margin-top:10px;padding:9px 12px;border-radius:10px;' +
+        'background:#edf8f3;color:#247a5a;border:1px solid rgba(36,122,90,.16);' +
+        'font-size:.82rem;line-height:1.35;font-weight:600;';
+      form.appendChild(success);
+    }
+
+    success.textContent = message;
+  }
+})();
+</script>
+
+
+<script>
+(function () {
+  // Send links that have no usable destination to the 404 page.
+  document.querySelectorAll('a').forEach(function (link) {
+    const href = (link.getAttribute('href') || '').trim().toLowerCase();
+
+    if (
+      !href ||
+      href === '#' ||
+      href === 'javascript:void(0)' ||
+      href === 'javascript:void(0);'
+    ) {
+      link.setAttribute('href', '404.html');
+    }
+  });
+
+  // Buttons that are purely demo/placeholder actions should also open 404.
+  // Functional controls (forms, FAQ, booking tabs, menu controls, etc.) are excluded.
+  document.querySelectorAll('button').forEach(function (button) {
+    const type = (button.getAttribute('type') || '').toLowerCase();
+    const classes = button.className || '';
+
+    const isFunctionalControl =
+      button.closest('form') ||
+      button.classList.contains('faq-q') ||
+      button.classList.contains('booking-tab') ||
+      button.classList.contains('bswap') ||
+      button.classList.contains('nav-toggle') ||
+      button.classList.contains('mobile-close') ||
+      button.classList.contains('lang-pill') ||
+      button.classList.contains('testi-btn') ||
+      button.classList.contains('testi-dots') ||
+      type === 'submit';
+
+    if (!isFunctionalControl && !button.dataset.pageAction) {
+      button.dataset.pageAction = '404';
+      button.addEventListener('click', function () {
+        window.location.href = '404.html';
+      });
+    }
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  const currentPage =
+    (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const currentHash = window.location.hash.toLowerCase();
+
+  document.querySelectorAll('.mobile-menu .mnav').forEach(function (link) {
+    const href = (link.getAttribute('href') || '').toLowerCase();
+    const parts = href.split('#');
+    const page = parts[0] || 'index.html';
+    const hash = parts[1] ? '#' + parts[1] : '';
+
+    const active =
+      page === currentPage &&
+      (!hash || hash === currentHash);
+
+    link.classList.toggle('active', active);
+
+    if (active) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  const menuButton = document.querySelector('.nav-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  if (!menuButton || !mobileMenu) return;
+
+  function syncMenuState() {
+    const isOpen =
+      mobileMenu.classList.contains('open') ||
+      mobileMenu.classList.contains('active') ||
+      mobileMenu.classList.contains('show');
+
+    menuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    menuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  }
+
+  const observer = new MutationObserver(syncMenuState);
+  observer.observe(mobileMenu, { attributes: true, attributeFilter: ['class', 'style'] });
+  syncMenuState();
+})();
+</script>
+
+</body>
+</html>
