@@ -352,7 +352,6 @@
   try {
     var session = JSON.parse(localStorage.getItem('stackly_session') || 'null');
     if (session && session.email) {
-      document.querySelectorAll('[data-auth="guest"]').forEach(function (el) { el.style.display = 'none'; });
       document.querySelectorAll('[data-auth="user"]').forEach(function (el) {
         el.style.display = '';
         var dash = el.querySelector('a[data-dash-link]');
@@ -366,14 +365,3 @@
     el.textContent = new Date().getFullYear();
   });
 })();
-try {
-    var session = JSON.parse(localStorage.getItem('stackly_session') || 'null');
-    if (session && session.email) {
-      document.querySelectorAll('[data-auth="guest"]').forEach(function (el) { el.style.display = 'none'; });
-      document.querySelectorAll('[data-auth="user"]').forEach(function (el) {
-        el.style.display = '';
-        var dash = el.querySelector('a[data-dash-link]');
-        if (dash) dash.setAttribute('href', session.role === 'admin' ? 'seller-dashboard.html' : 'dashboard.html');
-      });
-    }
-  } catch (err) { /* ignore */ }
