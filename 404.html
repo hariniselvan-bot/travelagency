@@ -16,9 +16,28 @@
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
+  <style>
+    .nf-actions {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
+      z-index: 10;
+      display: flex;
+      gap: .6rem;
+    }
+
+    @media (max-width: 560px) {
+      .nf-actions { display: none; }
+    }
+  </style>
 </head>
 
 <body class="nf-body">
+
+  <nav class="nf-actions" aria-label="Account">
+    <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+  </nav>
 
   <!-- Drifting clouds -->
   <span class="nf-cloud"
