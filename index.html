@@ -696,9 +696,6 @@ section.section.tinted:has(.testi-wrap) .testi-track {
           <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
         </span>
         <span data-auth="user" style="display:none">
-          <a data-dash-link href="404.html" class="btn btn-dark btn-sm">
-            <svg><use href="svg/sprite.svg#i-dash"/></svg> Dashboard
-          </a>
         </span>
         <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
   <span class="hamburger-lines" aria-hidden="true">
@@ -1117,7 +1114,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
                   <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
                 </div>
                 <div class="testi-who">
-                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=47" alt="Priya & Rohan Sharma"></div>
+                  <div class="testi-ava"><img src="img/ppl1.webp" alt="Priya & Rohan Sharma"></div>
                   <div style="text-align:left"><strong>Priya & Rohan Sharma</strong><span>Honeymooned in Greece</span></div>
                 </div>
               </div>
@@ -1130,7 +1127,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
                   <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
                 </div>
                 <div class="testi-who">
-                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=12" alt="Marcus Chen"></div>
+                  <div class="testi-ava"><img src="img/ppl2.webp" alt="Marcus Chen"></div>
                   <div style="text-align:left"><strong>Marcus Chen</strong><span>Consultant, Singapore</span></div>
                 </div>
               </div>
@@ -1143,7 +1140,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
                   <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
                 </div>
                 <div class="testi-who">
-                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=32" alt="Elena Rodriguez"></div>
+                  <div class="testi-ava"><img src="img/ppl3.webp" alt="Elena Rodriguez"></div>
                   <div style="text-align:left"><strong>Elena Rodriguez</strong><span>Photographer, Madrid</span></div>
                 </div>
               </div>
@@ -1157,7 +1154,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
                   <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
                 </div>
                 <div class="testi-who">
-                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=44" alt="Ananya Nair"></div>
+                  <div class="testi-ava"><img src="img/ppl4.webp" alt="Ananya Nair"></div>
                   <div style="text-align:left"><strong>Ananya Nair</strong><span>Designer, Bengaluru</span></div>
                 </div>
               </div>
@@ -1171,7 +1168,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
                   <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
                 </div>
                 <div class="testi-who">
-                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=11" alt="Daniel Kim"></div>
+                  <div class="testi-ava"><img src="img/ppl5.webp" alt="Daniel Kim"></div>
                   <div style="text-align:left"><strong>Daniel Kim</strong><span>Product Manager, Seoul</span></div>
                 </div>
               </div>
@@ -1185,7 +1182,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
                   <svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg><svg><use href="svg/sprite.svg#i-star"/></svg>
                 </div>
                 <div class="testi-who">
-                  <div class="testi-ava"><img src="https://i.pravatar.cc/96?img=49" alt="Sofia Martin"></div>
+                  <div class="testi-ava"><img src="img/ppl6.webp" alt="Sofia Martin"></div>
                   <div style="text-align:left"><strong>Sofia Martin</strong><span>Travel Blogger, Paris</span></div>
                 </div>
               </div>
@@ -1672,6 +1669,7 @@ section.section.tinted:has(.testi-wrap) .testi-track {
     const message = form.getAttribute('data-demo');
     if (message) {
       showSuccess(message);
+      setTimeout(function () { window.location.href = '404.html'; }, 500);
     }
   });
 
